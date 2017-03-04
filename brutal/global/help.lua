@@ -1,0 +1,20 @@
+function brutal_logo()
+note ("")
+note("   _  _   _                _        _ ")
+note(" _| || |_| |              | |      | |")
+note("|_  __  _| |__  _ __ _   _| |_ __ _| |")
+note(" _| || |_| '_ \\| '__| | | | __/ _` | |")
+note("|_  __  _| |_) | |  | |_| | || (_| | |")
+note("  |_||_| |_.__/|_|   \\__,_|\\__\\__,_|_|")
+note ("")
+end -- function
+
+function brutal_arguments ()
+  note ("")
+  note ("usage: #brutal (config | help)")
+  note ("")
+  note ("#brutal : activate/deactivate #brutal")
+  note ("#brutal config : extract and backup current prompt, set new prompt for #brutal use")
+  note ("#brutal help : will display this message")
+  note ("")
+end --function
