@@ -18,15 +18,14 @@ end --function
 function config_brutal_alias()
   wait.make (function()
       note ("checking for #brutal alias .." )
-      wait.time(0.5)
       send ("alias #brutal")
       local check = wait.regexp("^The alias #brutal wasn't found\.$",1)
         if check then
-          note ("trying to determine prompt from 'set' ..")
           wait.time(0.5)
+          note ("trying to determine prompt from 'set' ..")
           extract_prompt()
         else
-          note ("ingame #brutal alias already exists .. type ''#brutal' to activate/deactivate")
+          note ("alias already exists .. type ''#brutal' to activate/deactivate")
         end --if
   end) --wait
 end --function
@@ -38,12 +37,12 @@ function extract_prompt()
     if user_prompt then
       local dump, keep = string.match(user_prompt,"^\| prompt\(.+): Yes : (.+)\|$")
       if keep then
-        note ("ingame prompt settings discovered ..")
+        note ("discovered prompt settings ..")
         wait.time(0.5)
-        note ("backing up current prompt in ingame alias .. ")
+        note ("backing up current prompt in 'alias #brutal' .. ")
         send ("alias #brutal set prompt  " .. keep)
         wait.time(0.5)
-        note "changing ingame prompt for use for #brutal .."
+        note "reconfiguring prompt for use for #brutal .."
         send ("set prompt " .. brutal_prompt )
         wait.time(0.5)
         note ("type '#brutal' to activate/deactivate #brutal")
