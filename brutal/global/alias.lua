@@ -40,12 +40,12 @@ function extract_prompt()
         note ("discovered prompt settings ..")
         wait.time(0.5)
         note ("backing up current prompt in 'alias #brutal' .. ")
-        send ("alias #brutal set prompt  " .. keep)
+        send ("alias #brutal set prompt " .. keep)
         wait.time(0.5)
         note "reconfiguring prompt for use for #brutal .."
         send ("set prompt " .. brutal_prompt )
         wait.time(0.5)
-        note ("type '#brutal' to activate/deactivate #brutal")
+        note ("#brutal config done, type '#brutal' to activate/deactivate")
       else
         note ("could not extract prompt settings .. aborting !! ")
         return

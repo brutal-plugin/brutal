@@ -18,4 +18,5 @@ brightwhite = RGBColourToName(GetNormalColour(16))
 foreground = white
 background = black
 
-brutal_prompt = "[reset][cyan]#[reset]icesus [cyan]hp [reset][hplite][truehp]/[truemaxhp] ([hp]%)[reset] [cyan]sp[reset] [splite][truesp]/[truemaxsp] ([sp]%)[reset] [cyan]ep[reset] [eplite][trueep]/[truemaxep] ([ep]%)[reset] [cyan]xp[reset] [exp]/[exptolvl] ([protolvl]) [cyan]ad[reset] [exptoadv] ([protoadv]) [cyan]df[reset] [df] [cyan]$$[reset] [cash] [cyan]ph[reset] [phase] [cyan]dt[reset] [daytime] [cyan]hr[reset] [hour][reset] [cyan]st[reset] [status]"
+brutal_prompt = "[reset][cyan]#[reset]brutal [cyan]hp [reset][hplite][truehp]:[truemaxhp]:[hp][reset] [cyan]sp [reset][splite][truesp]:[truemaxsp]:[sp][reset] [cyan]ep [reset][eplite][trueep]:[truemaxep]:[ep][reset] [cyan]xp[reset] [exp]:[exptolvl]:[protolvl] [cyan]ad[reset] [exptoadv]:[protoadv] [cyan]df[reset] [df] [cyan]$$[reset] [cash] [cyan]ph[reset] [phase] [cyan]dt[reset] [daytime] [cyan]hr[reset] [hour][reset] [cyan]st[reset] [status] :[nl]"
+brutal_regex = "^#brutal hp (?<truehp>\d+):(?<maxhp>\d+):(?<hp>\d+) sp (?<truesp>\d+):(?<maxsp>\d+):(?<sp>\d+) ep (?<trueep>\d+):(?<maxep>\d+):(?<ep>\d+) xp (?<exp>\d+):(?<exptolvl>\d+):(?<pertolvl>\d+)\% ad (?<adtolvl>(\-\d+)|(\d+)):(?<protoadv>\d+)\% df (?<df>\d+) \$\$ (?<cash>\d+) ph (?<phase>\S+) dt (?<dt>\S+) hr (?<hr>.+) st(?<status>.+) :$"

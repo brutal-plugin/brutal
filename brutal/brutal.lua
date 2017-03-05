@@ -11,12 +11,3 @@ send = SendNoEcho
 require "global.init"
 require "infobar.init"
 require "chatwin.init"
-
-function OnPluginInstall()
-  ShowInfoBar (true)
-  InfoClear()
-  InfoBackground(background)
-  InfoColour(foreground)
-  brutal_logo()
-  brutal_arguments ()
-end --function

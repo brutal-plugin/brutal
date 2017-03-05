@@ -23,17 +23,34 @@
    date_saved="2017-03-04 20:43:15"
   >
   <alias
-   name="brutal"
-   script="brutal_alias"
-   match="#brutal*"
-   enabled="y"
-   group="#brutal"
-   sequence="100"
+    name="my_alias"
+    script="brutal_alias"
+    match="#brutal*"
+    enabled="y"
+    group="#brutal_alias"
+    send_to="13"
+    sequence="100"
   >
   </alias>
 </aliases>
 
-
+<triggers
+   muclient_version="5.05"
+   world_file_version="15"
+   date_saved="2017-03-05 19:00:16"
+  >
+  <trigger
+   enabled="y"
+   group="#brutal_prompt"
+   keep_evaluating="y"
+   match="^#brutal hp (?&lt;truehp&gt;\d+):(?&lt;maxhp&gt;\d+):(?&lt;hp&gt;\d+) sp (?&lt;truesp&gt;\d+):(?&lt;maxsp&gt;\d+):(?&lt;sp&gt;\d+) ep (?&lt;trueep&gt;\d+):(?&lt;maxep&gt;\d+):(?&lt;ep&gt;\d+) xp (?&lt;exp&gt;\d+):(?&lt;exptolvl&gt;\d+):(?&lt;pertolvl&gt;\d+)\% ad (?&lt;adtolvl&gt;(\-\d+)|(\d+)):(?&lt;protoadv&gt;\d+)\% df (?&lt;df&gt;\d+) \$\$ (?&lt;cash&gt;\d+) ph (?&lt;phase&gt;\S+) dt (?&lt;dt&gt;\S+) hr (?&lt;hr&gt;.+) st(?&lt;status&gt;.+) :$"
+   name="prompt"
+   regexp="y"
+   script="brutal_prompt"
+   sequence="100"
+  >
+  </trigger>
+</triggers>
 <!--  Get our standard constants -->
 
 <include name="constants.lua"/>
