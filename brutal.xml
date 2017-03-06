@@ -46,7 +46,7 @@
    match="^#brutal hp (?&lt;truehp&gt;\d+):(?&lt;maxhp&gt;\d+):(?&lt;hp&gt;\d+) sp (?&lt;truesp&gt;\d+):(?&lt;maxsp&gt;\d+):(?&lt;sp&gt;\d+) ep (?&lt;trueep&gt;\d+):(?&lt;maxep&gt;\d+):(?&lt;ep&gt;\d+) xp (?&lt;exp&gt;\d+):(?&lt;exptolvl&gt;\d+):(?&lt;pertolvl&gt;\d+)\% ad (?&lt;adtolvl&gt;(\-\d+)|(\d+)):(?&lt;protoadv&gt;\d+)\% df (?&lt;df&gt;\d+) \$\$ (?&lt;cash&gt;\d+) ph (?&lt;phase&gt;\S+) dt (?&lt;dt&gt;\S+) hr (?&lt;hr&gt;.+) st(?&lt;status&gt;.+) :$"
    name="prompt"
    regexp="y"
-   script="brutal_prompt"
+   script="capture_prompt"
    sequence="100"
   >
   </trigger>

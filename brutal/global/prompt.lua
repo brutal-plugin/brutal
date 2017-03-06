@@ -1,5 +1,5 @@
-function brutal_prompt(name,line,wildcards,styles)
+function capture_prompt(name,line,wildcards,styles)
   --[[tprint (styles)
   tprint (wildcards)]]--
-  
+
 end --function

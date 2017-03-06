@@ -9,7 +9,7 @@ function brutal_alias(name,line)
         return
       end --if
       if line == "#brutal" then
-        --activate/deactivate #brutal
+        activate_brutal()
         return
       end --if
   end) --wait
@@ -22,7 +22,6 @@ function config_brutal_alias()
       local check = wait.regexp("^The alias #brutal wasn't found\.$",1)
         if check then
           wait.time(0.5)
-          note ("trying to determine prompt from 'set' ..")
           extract_prompt()
         else
           note ("alias already exists .. type ''#brutal' to activate/deactivate")
@@ -30,8 +29,29 @@ function config_brutal_alias()
   end) --wait
 end --function
 
+function activate_brutal ()
+  if GetTriggerInfo("prompt",8) == true then
+    EnableTrigger ("prompt",false)
+    send ("#brutal")
+    note ("#brutal deactivated")
+  else
+    EnableTrigger ("prompt",true)
+    note ("checking for #brutal alias .." )
+    send ("alias #brutal")
+    local check = wait.regexp("^\#brutal.+$",1)
+    if check then
+      send ("set prompt " .. brutal_prompt )
+      note ("#brutal activated")
+    end --if
+  end --if
+end --if
+
 function extract_prompt()
   wait.make (function ()
+    note ("setting terminal to " .. terminal)
+    send ("term " .. terminal)
+    wait.time (0.5)
+    note ("trying to determine prompt from 'set' ..")
     send ("set")
     local user_prompt = wait.match("| prompt               : Yes :*",2)
     if user_prompt then
