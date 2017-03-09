@@ -18,9 +18,9 @@
 </plugin>
 
 <aliases
-   muclient_version="5.05"
+   muclient_version="4.90"
    world_file_version="15"
-   date_saved="2017-03-04 20:43:15"
+   date_saved="2017-03-05 19:00:00"
   >
   <alias
     name="my_alias"
@@ -35,9 +35,9 @@
 </aliases>
 
 <triggers
-   muclient_version="5.05"
+   muclient_version="4.90"
    world_file_version="15"
-   date_saved="2017-03-05 19:00:16"
+   date_saved="2017-03-05 19:00:00"
   >
   <trigger
    enabled="y"
