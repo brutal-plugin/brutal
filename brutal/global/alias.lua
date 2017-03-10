@@ -30,20 +30,30 @@ function config_brutal_alias()
 end --function
 
 function activate_brutal ()
-  if GetTriggerInfo("prompt",8) == true then
-    EnableTrigger ("prompt",false)
-    send ("#brutal")
-    note ("#brutal deactivated")
-  else
-    EnableTrigger ("prompt",true)
-    note ("checking for #brutal alias .." )
-    send ("alias #brutal")
-    local check = wait.regexp("^\#brutal.+$",1)
-    if check then
-      send ("set prompt " .. brutal_prompt )
-      note ("#brutal activated")
+  wait.make (function()
+    if GetTriggerInfo("prompt",8) == true then
+      EnableTrigger ("prompt",false)
+      note ("#brutal deactivated .. restoring prompt")
+      send ("#brutal")
+    else
+      note ("checking for #brutal alias .." )
+      send ("alias #brutal")
+      local alias_check = wait.regexp("^\#brutal.+$",1)
+      if alias_check then
+          EnableTrigger ("prompt",true)
+          note ("#brutal activated .. ")
+          send ("")
+          local prompt_check =  wait.regexp("^\#brutal.+$",1)
+          if not prompt_check then
+            note ("capturing prompt .. ")
+            send ("set prompt " .. brutal_prompt )
+          end --if
+          return
+      else
+        note ("try '#brutal config'")
+      end --if
     end --if
-  end --if
+  end) --wait
 end --if
 
 function extract_prompt()
