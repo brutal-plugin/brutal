@@ -31,8 +31,8 @@ end --function
 
 function activate_brutal ()
   wait.make (function()
-    if GetTriggerInfo("prompt",8) == true then
-      EnableTrigger ("prompt",false)
+    if GetTriggerInfo("prompt_trigger",8) == true then
+      EnableTrigger ("prompt_trigger",false)
       note ("#brutal deactivated .. restoring prompt")
       send ("#brutal")
     else
@@ -40,13 +40,11 @@ function activate_brutal ()
       send ("alias #brutal")
       local alias_check = wait.regexp("^\#brutal.+$",1)
       if alias_check then
-          EnableTrigger ("prompt",true)
+          EnableTrigger ("prompt_trigger",true)
           if gag_ingame_prompt == true then
             SetTriggerOption("prompt","omit_from_output",1)
-            SetTriggerOption("prompt","omit_from_log",1)
           else
             SetTriggerOption("prompt","omit_from_output",0)
-            SetTriggerOption("prompt","omit_from_log",0)
           end --if
           note ("#brutal activated .. ")
           send ("")

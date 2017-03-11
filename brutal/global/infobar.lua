@@ -3,11 +3,22 @@ function build_infobar()
   local hp = string.format("%3s",ingame_prompt["hp"])
   local sp = string.format("%3s",ingame_prompt["sp"])
   local ep = string.format("%3s",ingame_prompt["ep"])
+  local truehp = ingame_prompt["truehp"]
+  local truesp = ingame_prompt["truesp"]
+  local trueep = ingame_prompt["trueep"]
+  local maxhp = ingame_prompt["maxhp"]
+  local maxsp = ingame_prompt["maxsp"]
+  local maxep = ingame_prompt["maxep"]
 
   --format health bars
-  local info_hp = (hp .. "% " )
-  local info_sp = (sp .. "% " )
-  local info_ep = (ep .. "% " )
+  local info_hp = (truehp .. "\/".. maxhp)
+  local info_sp = (truesp .. "\/".. maxsp)
+  local info_ep = (trueep .. "\/".. maxep)
+
+  --format percentages
+  local per_hp =  (hp .. "%")
+  local per_sp =  (sp .. "%")
+  local per_ep =  (ep .. "%")
 
   --calculate number of # required
   local bar_hp = tonumber(string.format("%i",tonumber(hp)/10))
@@ -23,9 +34,9 @@ function build_infobar()
   infobar_display_title()
 
   --display hp/sp/ep
-  infobar_display_hp(info_hp,bar_hp)
-  infobar_display_sp(info_sp,bar_sp)
-  infobar_display_ep(info_ep,bar_ep)
+  infobar_display_hp(info_hp,bar_hp,per_hp)
+  infobar_display_sp(info_sp,bar_sp,per_sp)
+  infobar_display_ep(info_ep,bar_ep,per_ep)
 
   --grab exp, cash, df values
   local xp = kilomili(ingame_prompt["xp"])
@@ -34,10 +45,18 @@ function build_infobar()
   local df = kilomili(ingame_prompt["df"])
 
   --display exp, cash, df
-  Info("\t")
   infobar_display_xp(xp,protolvl)
   infobar_display_cash(cash)
   infobar_display_df(df)
+
+  --grab daytime, hour, status values
+  local dt = ingame_prompt["dt"]
+  local hr = string.lower(ingame_prompt["hr"])
+  local st = ingame_prompt["st"]
+
+  --display daytime, hour, status
+  infobar_display_dt(dt, hr)
+  infobar_display_st(st)
 
 end --function
 
@@ -48,14 +67,14 @@ function infobar_display_title()
   Info("brutal")
 end --function
 
-function infobar_display_hp(info_hp,bar_hp)
-  Info (" hp:")
+function infobar_display_hp(info_hp,bar_hp,per_hp)
+  Info (" hp ")
   InfoColour(ingame_prompt["hp_lite"])
   Info(info_hp)
   InfoColour(foreground)
-  InfoFont(infobar_font,6,1)
-  Info ("[")
-  InfoColour(ingame_prompt["hp_lite"])
+  --InfoFont(infobar_font,6,1)
+  Info (" [")
+  InfoColour(ingame_prompt["bar_hp_lite"])
   local i = 0
   for i=1,10,1 do
     if bar_hp > 10 then
@@ -70,18 +89,20 @@ function infobar_display_hp(info_hp,bar_hp)
     end --if
   end -- for
   InfoColour(foreground)
-  Info ("]")
-  InfoFont(infobar_font,infobar_font_size,0)
+  Info ("] ")
+  InfoColour(ingame_prompt["hp_lite"])
+  Info (per_hp)
+  InfoColour(foreground)
 end --function
 
-function infobar_display_sp(info_sp,bar_sp)
-  Info (" sp:")
+function infobar_display_sp(info_sp,bar_sp,per_sp)
+  Info (" sp ")
   InfoColour(ingame_prompt["sp_lite"])
   Info(info_sp)
   InfoColour(foreground)
-  InfoFont(infobar_font,6,1)
-  Info ("[")
-  InfoColour(ingame_prompt["sp_lite"])
+  --InfoFont(infobar_font,6,1)
+  Info (" [")
+  InfoColour(ingame_prompt["bar_sp_lite"])
   local i = 0
   for i=1,10,1 do
     if bar_sp > 10 then
@@ -96,18 +117,20 @@ function infobar_display_sp(info_sp,bar_sp)
     end --if
   end -- for
   InfoColour(foreground)
-  Info ("]")
-  InfoFont(infobar_font,infobar_font_size,0)
+  Info ("] ")
+  InfoColour(ingame_prompt["sp_lite"])
+  Info (per_sp)
+  InfoColour(foreground)
 end --function
 
-function infobar_display_ep(info_ep,bar_ep)
-  Info (" ep:")
+function infobar_display_ep(info_ep,bar_ep,per_ep)
+  Info (" ep ")
   InfoColour(ingame_prompt["ep_lite"])
   Info(info_ep)
   InfoColour(foreground)
-  InfoFont(infobar_font,6,1)
-  Info ("[")
-  InfoColour(ingame_prompt["ep_lite"])
+  --InfoFont(infobar_font,6,1)
+  Info (" [")
+  InfoColour(ingame_prompt["bar_ep_lite"])
   local i = 0
   for i=1,10,1 do
     if bar_ep > 10 then
@@ -122,25 +145,43 @@ function infobar_display_ep(info_ep,bar_ep)
     end --if
   end -- for
   InfoColour(foreground)
-  Info ("]")
-  InfoFont(infobar_font,infobar_font_size,0)
+  Info ("] ")
+  InfoColour(ingame_prompt["ep_lite"])
+  Info (per_ep)
+  InfoColour(foreground)
 end --function
 
 function  infobar_display_xp(xp,protolvl)
   Info (" xp ")
-  InfoColour(cyan)
+  InfoColour(brightblack)
   Info (xp .. " \(" .. protolvl .. "\)")
   InfoColour(foreground)
 end --function
+
 function  infobar_display_cash(cash)
   Info (" \$\$ ")
-  InfoColour(cyan)
+  InfoColour(brightblack)
   Info (cash)
   InfoColour(foreground)
 end --function
+
 function  infobar_display_df(df)
   Info (" df ")
-  InfoColour(cyan)
+  InfoColour(brightblack)
   Info (df)
+  InfoColour(foreground)
+end --function
+
+function infobar_display_dt(dt, hr)
+  Info (" daytime ")
+  InfoColour(brightblack)
+  Info (dt .. ", " .. hr)
+  InfoColour(foreground)
+end --function
+
+function infobar_display_st(st)
+  Info (" status ")
+  InfoColour(brightred)
+  Info (st)
   InfoColour(foreground)
 end --function
