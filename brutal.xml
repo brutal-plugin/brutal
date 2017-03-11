@@ -50,6 +50,58 @@
     regexp="y"
   >
   </trigger>
+  <trigger
+   enabled="y"
+   group="prompt_group"
+   keep_evaluating="y"
+   match="^HP:\[(.+)\]\s+(?&lt;hp&gt;\d+)\%\s+SP:\[.+\]\s+(?&lt;sp&gt;\d+)\%\s+EP:\[.+\]\s+(?&lt;ep&gt;\d+)\%$"
+   name="healthbar_trigger"
+   omit_from_output="n"
+   regexp="y"
+   script="healthbar_update"
+   sequence="100"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
+   group="clear_status"
+   keep_evaluating="y"
+   match="^You are prepared to release the spell\.$"
+   regexp="y"
+   script="clear_prompt_status"
+   sequence="100"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
+   group="clear_status"
+   keep_evaluating="y"
+   match="^You feel fully healed\.$"
+   regexp="y"
+   script="fully_healed"
+   sequence="100"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
+   group="clear_status"
+   keep_evaluating="y"
+   match="^You feel fully rested\.$"
+   regexp="y"
+   script="fully_rested"
+   sequence="100"
+  >
+  </trigger>
+  <trigger
+   enabled="y"
+   group="clear_status"
+   keep_evaluating="y"
+   match="^Your magical power has returned to full strength\.$"
+   regexp="y"
+   script="fully_magical"
+   sequence="100"
+  >
+  </trigger>
 </triggers>
 <!--  Get our standard constants -->
 

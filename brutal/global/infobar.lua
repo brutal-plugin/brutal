@@ -69,10 +69,13 @@ end --function
 
 function infobar_display_hp(info_hp,bar_hp,per_hp)
   Info (" hp ")
+  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+    InfoFont(infobar_font,infobar_font_size,8)
+  end --if
   InfoColour(ingame_prompt["hp_lite"])
   Info(info_hp)
   InfoColour(foreground)
-  --InfoFont(infobar_font,6,1)
+  InfoFont(infobar_font,infobar_font_size,0)
   Info (" [")
   InfoColour(ingame_prompt["bar_hp_lite"])
   local i = 0
@@ -93,14 +96,18 @@ function infobar_display_hp(info_hp,bar_hp,per_hp)
   InfoColour(ingame_prompt["hp_lite"])
   Info (per_hp)
   InfoColour(foreground)
+  InfoFont(infobar_font,infobar_font_size,0)
 end --function
 
 function infobar_display_sp(info_sp,bar_sp,per_sp)
   Info (" sp ")
+  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+    InfoFont(infobar_font,infobar_font_size,8)
+  end --if
   InfoColour(ingame_prompt["sp_lite"])
   Info(info_sp)
   InfoColour(foreground)
-  --InfoFont(infobar_font,6,1)
+  InfoFont(infobar_font,infobar_font_size,0)
   Info (" [")
   InfoColour(ingame_prompt["bar_sp_lite"])
   local i = 0
@@ -121,14 +128,18 @@ function infobar_display_sp(info_sp,bar_sp,per_sp)
   InfoColour(ingame_prompt["sp_lite"])
   Info (per_sp)
   InfoColour(foreground)
+  InfoFont(infobar_font,infobar_font_size,0)
 end --function
 
 function infobar_display_ep(info_ep,bar_ep,per_ep)
   Info (" ep ")
+  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+    InfoFont(infobar_font,infobar_font_size,8)
+  end --if
   InfoColour(ingame_prompt["ep_lite"])
   Info(info_ep)
   InfoColour(foreground)
-  --InfoFont(infobar_font,6,1)
+  InfoFont(infobar_font,infobar_font_size,0)
   Info (" [")
   InfoColour(ingame_prompt["bar_ep_lite"])
   local i = 0
@@ -149,6 +160,7 @@ function infobar_display_ep(info_ep,bar_ep,per_ep)
   InfoColour(ingame_prompt["ep_lite"])
   Info (per_ep)
   InfoColour(foreground)
+  InfoFont(infobar_font,infobar_font_size,0)
 end --function
 
 function  infobar_display_xp(xp,protolvl)
