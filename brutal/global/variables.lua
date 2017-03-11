@@ -1,17 +1,13 @@
---set fonts
+--set fonts and size, (feel free to experiment with these)
 miniwindow_font = "consolas"
 miniwindow_font_size = 9
 infobar_font = "consolas"
 infobar_font_size = 9
 
---set the terminal (ingame term (cols)x(rows))
+--set the terminal (ingame term (cols)x(rows), to avoid give problems with -more- when setting alias)
 terminal = "180x100"
 
---set brutal prompt
-brutal_prompt = "[reset][cyan]#[reset]brutal [cyan]hp [reset][hplite][truehp]:[truemaxhp]:[hp][reset] [cyan]sp [reset][splite][truesp]:[truemaxsp]:[sp][reset] [cyan]ep [reset][eplite][trueep]:[truemaxep]:[ep][reset] [cyan]xp[reset] [exp]:[exptolvl]:[protolvl] [cyan]ad[reset] [exptoadv]:[protoadv] [cyan]df[reset] [df] [cyan]$$[reset] [cash] [cyan]ph[reset] [phase] [cyan]dt[reset] [daytime] [cyan]hr[reset] [hour][reset] [cyan]st[reset] [status] :[nl]"
-brutal_regex = "^#brutal hp (?<truehp>\d+):(?<maxhp>\d+):(?<hp>\d+) sp (?<truesp>\d+):(?<maxsp>\d+):(?<sp>\d+) ep (?<trueep>\d+):(?<maxep>\d+):(?<ep>\d+) xp (?<exp>\d+):(?<exptolvl>\d+):(?<pertolvl>\d+)\% ad (?<adtolvl>(\-\d+)|(\d+)):(?<protoadv>\d+)\% df (?<df>\d+) \$\$ (?<cash>\d+) ph (?<phase>\S+) dt (?<dt>\S+) hr (?<hr>.+) st(?<status>.+) :$"
-
---ansi colours extracted from mushclient
+--colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
 red = RGBColourToName(GetNormalColour(2))
 green = RGBColourToName(GetNormalColour(3))
@@ -27,8 +23,10 @@ brightyellow = RGBColourToName(GetNormalColour(12))
 brightblue = RGBColourToName(GetNormalColour(13))
 brightmagenta = RGBColourToName(GetNormalColour(14))
 brightcyan = RGBColourToName(GetNormalColour(15))
-brightwhite = RGBColourToName(GetNormalColour(16))
-foreground = white
+brightwhite = "white"
+foreground = brightwhite
 background = black
 
+--set brutal prompt, (for my refrence and global variables/tables, dont change these)
+brutal_prompt = "[reset][cyan]#[reset]brutal [cyan]hp [reset][hplite][truehp]:[truemaxhp]:[hp][reset] [cyan]sp [reset][splite][truesp]:[truemaxsp]:[sp][reset] [cyan]ep [reset][eplite][trueep]:[truemaxep]:[ep][reset] [cyan]xp[reset] [exp]:[exptolvl]:[protolvl] [cyan]ad[reset] [exptoadv]:[protoadv] [cyan]df[reset] [df] [cyan]$$[reset] [cash] [cyan]ph[reset] [phase] [cyan]dt[reset] [daytime] [cyan]hr[reset] [hour][reset] [cyan]st[reset] [status] :[nl]"
 ingame_prompt = {}
