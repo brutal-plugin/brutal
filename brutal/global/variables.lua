@@ -7,6 +7,9 @@ infobar_font_size = 9
 --set the terminal (ingame term (cols)x(rows), to avoid give problems with -more- when setting alias)
 terminal = "180x100"
 
+--gag output from main window
+gag_ingame_prompt = true
+
 --colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
 red = RGBColourToName(GetNormalColour(2))

@@ -41,6 +41,11 @@ function activate_brutal ()
       local alias_check = wait.regexp("^\#brutal.+$",1)
       if alias_check then
           EnableTrigger ("prompt",true)
+          if gag_ingame_prompt == true then
+            SetTriggerOption("prompt","omit_from_output",1)
+          else
+            SetTriggerOption("prompt","omit_from_output",0)
+          end --if
           note ("#brutal activated .. ")
           send ("")
           local prompt_check =  wait.regexp("^\#brutal.+$",1)
