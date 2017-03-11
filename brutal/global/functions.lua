@@ -11,7 +11,20 @@ function OnPluginInstall()
   InfoColour(foreground)
   brutal_logo()
   brutal_arguments()
-  EnableTrigger ("prompt_trigger",false)
+  EnableTriggerGroup ("brutal_plugin_triggers",false)
+  
+  if gag_ingame_prompt == true then
+    SetTriggerOption("prompt_trigger","omit_from_output",1)
+  else
+    SetTriggerOption("prompt_trigger","omit_from_output",0)
+  end --if
+
+  if gag_color_bar == true then
+    SetTriggerOption("healthbar_trigger","omit_from_output",1)
+  else
+    SetTriggerOption("healthbar_trigger","omit_from_output",0)
+  end --if
+
   if GetOption("enable_speed_walk") == 1 then
     note ("#brutal alias may conflict with speedwalk prefix '#', temporary disable speedwalks to configure #brutal ..")
   end --if

@@ -1,7 +1,6 @@
-require "global.functions"
 require "global.variables"
+require "global.functions"
 require "global.help"
 require "global.alias"
 require "global.prompt"
 require "global.infobar"
-require "global.statuswin"

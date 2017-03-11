@@ -9,6 +9,7 @@ terminal = "180x100"
 
 --gag output from main window
 gag_ingame_prompt = true
+gag_color_bar = true
 
 --colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
