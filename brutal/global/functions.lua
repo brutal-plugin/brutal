@@ -16,3 +16,17 @@ function OnPluginInstall()
     note ("#brutal alias may conflict with speedwalk prefix '#', temporary disable speedwalks to configure #brutal ..")
   end --if
 end --function
+
+function kilomili(number)
+  local number = tonumber(number)
+  if string.len(number) < 5 then
+    number = commas(number)
+  elseif string.len(number) > 4 and string.len(number) < 7 then
+    number = string.format("%.2f",(number / 10^3)) .. "k"
+  elseif string.len(number) > 6 and string.len(number) < 10 then
+    number = string.format("%.2f",(number / 10^6)) .. "m"
+  elseif string.len(number) >  9 then
+    number = string.format("%.2f",(number / 10^9)) .. "b"
+  end --if
+  return (number)
+end --function

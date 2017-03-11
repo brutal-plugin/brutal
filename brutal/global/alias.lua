@@ -43,8 +43,10 @@ function activate_brutal ()
           EnableTrigger ("prompt",true)
           if gag_ingame_prompt == true then
             SetTriggerOption("prompt","omit_from_output",1)
+            SetTriggerOption("prompt","omit_from_log",1)
           else
             SetTriggerOption("prompt","omit_from_output",0)
+            SetTriggerOption("prompt","omit_from_log",0)
           end --if
           note ("#brutal activated .. ")
           send ("")
