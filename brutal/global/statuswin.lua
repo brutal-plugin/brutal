@@ -8,10 +8,10 @@ function build_status_window()
   local info_ep = ("EP" .. string.format("%4s",ep) .. "% ")
 
   -- fill entire box to clear it
-  check (WindowRectOp (win, 2, 0, 0, 0, 0, BACKGROUND_COLOUR))  -- fill entire box
+  check (WindowRectOp (status_win, 2, 0, 0, 0, 0, BACKGROUND_COLOUR))  -- fill entire box
 
   -- Edge around box rectangle
-  check (WindowCircleOp (win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
+  check (WindowCircleOp (status_win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
 
   vertical = 6  -- pixel to start at
 
@@ -34,11 +34,8 @@ function init_statuswin()
   BACKGROUND_COLOUR = ColourNameToRGB (background)
   FONT_COLOUR = ColourNameToRGB (foreground)
   BORDER_COLOUR = ColourNameToRGB (brightblack)
-  win = GetPluginID () .. "statuswin"
-  font_id = "fn"
-
-  font_name = miniwindow_font    -- the actual font
-  font_size = miniwindow_font_size
+  status_win = GetPluginID () .. "status_win"
+  status_font_id = "fn"
 
   local x, y, mode, flags =
      tonumber (GetVariable ("windowx")) or 0,
@@ -47,13 +44,13 @@ function init_statuswin()
      tonumber (GetVariable ("windowflags")) or 0
 
   -- make miniwindow so I can grab the font info
-  check (WindowCreate (win,
+  check (WindowCreate (status_win,
                 x, y, WINDOW_WIDTH, WINDOW_HEIGHT,
                 mode,
                 flags,
                 BACKGROUND_COLOUR) )
    -- make a hotspot
-   WindowAddHotspot(win, "hs1",
+   WindowAddHotspot(status_win, "hs1",
                     0, 0, 0, 0,   -- whole window
                     "",   -- MouseOver
                     "",   -- CancelMouseOver
@@ -62,9 +59,9 @@ function init_statuswin()
                     "",   -- MouseUp
                     "Drag to move",  -- tooltip text
                     1, 0)  -- hand cursor
-   WindowDragHandler(win, "hs1", "dragmove", "dragrelease", 0)
-   check (WindowFont (win, font_id, font_name, font_size, false, false, false, false, 0, 0))  -- normal
-   font_height = WindowFontInfo (win, font_id, 1)  -- height
+   WindowDragHandler(status_win, "hs1", "dragmove", "dragrelease", 0)
+   check (WindowFont (status_win, status_font_id, miniwindow_font, miniwindow_font_size, false, false, false, false, 0, 0))  -- normal
+   font_height = WindowFontInfo (status_win, status_font_id, 1)  -- height
    if GetVariable ("enabled") == "false" then
      ColourNote ("yellow", "", "Warning: Plugin " .. GetPluginName ().. " is currently disabled.")
      check (EnablePlugin(GetPluginID (), false))
@@ -75,20 +72,20 @@ function init_statuswin()
  function mousedown(flags, hotspot_id)
 
   -- find where mouse is so we can adjust window relative to mouse
-  startx, starty = WindowInfo (win, 14), WindowInfo (win, 15)
+  startx, starty = WindowInfo (status_win, 14), WindowInfo (status_win, 15)
 
   -- find where window is in case we drag it offscreen
-  origx, origy = WindowInfo (win, 10), WindowInfo (win, 11)
+  origx, origy = WindowInfo (status_win, 10), WindowInfo (status_win, 11)
 end -- mousedown
 
 function dragmove(flags, hotspot_id)
 
   -- find where it is now
-  local posx, posy = WindowInfo (win, 17),
-                     WindowInfo (win, 18)
+  local posx, posy = WindowInfo (status_win, 17),
+                     WindowInfo (status_win, 18)
 
   -- move the window to the new location
-  WindowPosition(win, posx - startx, posy - starty, 0, 2);
+  WindowPosition(status_win, posx - startx, posy - starty, 0, 2);
 
   -- change the mouse cursor shape appropriately
   if posx < 0 or posx > GetInfo (281) or
@@ -101,13 +98,13 @@ function dragmove(flags, hotspot_id)
 end -- dragmove
 
 function dragrelease(flags, hotspot_id)
-  local newx, newy = WindowInfo (win, 17), WindowInfo (win, 18)
+  local newx, newy = WindowInfo (status_win, 17), WindowInfo (status_win, 18)
 
   -- don't let them drag it out of view
   if newx < 0 or newx > GetInfo (281) or
      newy < 0 or newy > GetInfo (280) then
      -- put it back
-    WindowPosition(win, origx, origy, 0, 2);
+    WindowPosition(status_win, origx, origy, 0, 2);
   end -- if out of bounds
 
 end -- dragrelease
@@ -121,12 +118,12 @@ function DoGauge (sPrompt, Percent, Colour)
   if Fraction < 0 then Fraction = 0 end
 
 
-  local width = WindowTextWidth (win, font_id, sPrompt)
+  local width = WindowTextWidth (status_win, status_font_id, sPrompt)
 
-  WindowText (win, font_id, sPrompt,
+  WindowText (status_win, status_font_id, sPrompt,
                              GAUGE_LEFT - width, vertical, 0, 0, FONT_COLOUR)
 
-  WindowRectOp (win, 2, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
+  WindowRectOp (status_win, 2, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
                           BACKGROUND_COLOUR)  -- fill entire box
 
 
@@ -136,12 +133,12 @@ function DoGauge (sPrompt, Percent, Colour)
   if math.floor (gauge_width) > 0 then
 
     -- top half
-    WindowGradient (win, GAUGE_LEFT, vertical, GAUGE_LEFT + gauge_width, vertical + GAUGE_HEIGHT / 2,
+    WindowGradient (status_win, GAUGE_LEFT, vertical, GAUGE_LEFT + gauge_width, vertical + GAUGE_HEIGHT / 2,
                     0x000000,
                     Colour, 2)
 
     -- bottom half
-    WindowGradient (win, GAUGE_LEFT, vertical + GAUGE_HEIGHT / 2,
+    WindowGradient (status_win, GAUGE_LEFT, vertical + GAUGE_HEIGHT / 2,
                     GAUGE_LEFT + gauge_width, vertical +  GAUGE_HEIGHT,
                     Colour,
                     0x000000,
@@ -154,12 +151,12 @@ function DoGauge (sPrompt, Percent, Colour)
 
   -- ticks
   for i = 1, NUMBER_OF_TICKS do
-    WindowLine (win, GAUGE_LEFT + (i * ticks_at), vertical,
+    WindowLine (status_win, GAUGE_LEFT + (i * ticks_at), vertical,
                 GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB ("silver"), 0, 1)
   end -- for
 
   -- draw a box around it
-  check (WindowRectOp (win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
+  check (WindowRectOp (status_win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
           ColourNameToRGB ("lightgrey")))  -- frame entire box
 
   vertical = vertical + font_height + 3

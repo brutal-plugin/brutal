@@ -20,15 +20,15 @@ function OnPluginInstall()
 end --function
 
 function OnPluginDisable ()
-  WindowShow (win, false)
+  WindowShow (status_win, false)
 end -- OnPluginDisable
 
 function OnPluginSaveState ()
   SetVariable ("enabled", tostring (GetPluginInfo (GetPluginID (), 17)))
-  SetVariable ("windowx", tostring (WindowInfo (win, 10)))
-  SetVariable ("windowy", tostring (WindowInfo (win, 11)))
-  SetVariable ("windowmode", tostring (WindowInfo (win, 7)))
-  SetVariable ("windowflags", tostring (WindowInfo (win, 8)))
+  SetVariable ("windowx", tostring (WindowInfo (status_win, 10)))
+  SetVariable ("windowy", tostring (WindowInfo (status_win, 11)))
+  SetVariable ("windowmode", tostring (WindowInfo (status_win, 7)))
+  SetVariable ("windowflags", tostring (WindowInfo (status_win, 8)))
 end -- OnPluginSaveState
 
 function kilomili(number)
