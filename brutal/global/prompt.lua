@@ -22,6 +22,8 @@ function capture_prompt(name,line,wildcards,styles)
   end --if
   -- build infobar
   build_infobar()
+  --build persional health bar miniwindow
+  build_status_window()
 end --function
 
 function healthbar_update(name,line,wildcards)
@@ -77,11 +79,11 @@ function fully_healed()
 end --function
 
 function  fully_magical()
-  ingame_prompt["hp"] = 100
+  ingame_prompt["sp"] = 100
   capture_prompt("update",prompt_line,ingame_prompt,prompt_styles)
 end --function
 
 function fully_rested()
-  ingame_prompt["hp"] = 100
+  ingame_prompt["ep"] = 100
   capture_prompt("update",prompt_line,ingame_prompt,prompt_styles)
 end --function
