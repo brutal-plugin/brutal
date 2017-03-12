@@ -3,9 +3,9 @@ function build_status_window()
   local sp = ingame_prompt["sp"]
   local ep = ingame_prompt["ep"]
 
-  local info_hp = ("HP " .. ingame_prompt["truehp"] .. "\/".. ingame_prompt["maxhp"] .. string.format("%4s",hp) .. "% ")
-  local info_sp = ("SP " .. ingame_prompt["truesp"] .. "\/".. ingame_prompt["maxsp"] .. string.format("%4s",sp) .. "% ")
-  local info_ep = ("EP " .. ingame_prompt["trueep"] .. "\/".. ingame_prompt["maxep"] .. string.format("%4s",ep) .. "% ")
+  local info_hp = ("HP" .. string.format("%4s",hp) .. "% ")
+  local info_sp = ("SP" .. string.format("%4s",sp) .. "% ")
+  local info_ep = ("EP" .. string.format("%4s",ep) .. "% ")
 
   -- fill entire box to clear it
   check (WindowRectOp (win, 2, 0, 0, 0, 0, BACKGROUND_COLOUR))  -- fill entire box
@@ -24,10 +24,10 @@ end --function
 
 
 function init_statuswin()
-  GAUGE_LEFT = 140
+  GAUGE_LEFT = 70
   GAUGE_HEIGHT = 12
 
-  WINDOW_WIDTH = 300
+  WINDOW_WIDTH = 250
   WINDOW_HEIGHT = 65
   NUMBER_OF_TICKS = 5
 
@@ -70,7 +70,6 @@ function init_statuswin()
      check (EnablePlugin(GetPluginID (), false))
      return
    end -- they didn't enable us last time
-   WindowShow (win, true)
  end -- OnPluginInstall
 
  function mousedown(flags, hotspot_id)
