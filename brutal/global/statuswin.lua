@@ -15,10 +15,9 @@ function build_status_window()
 
   vertical = 6  -- pixel to start at
 
-
-  DoGauge(info_hp, hp, ColourNameToRGB("red") )
-  DoGauge(info_sp, sp, ColourNameToRGB("blue") )
-  DoGauge(info_ep, ep, ColourNameToRGB("green") )
+  DoGauge(info_hp, hp, ColourNameToRGB(red) )
+  DoGauge(info_sp, sp, ColourNameToRGB(blue) )
+  DoGauge(info_ep, ep, ColourNameToRGB(green) )
 
 end --function
 
@@ -152,12 +151,12 @@ function DoGauge (sPrompt, Percent, Colour)
   -- ticks
   for i = 1, NUMBER_OF_TICKS do
     WindowLine (status_win, GAUGE_LEFT + (i * ticks_at), vertical,
-                GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB ("silver"), 0, 1)
+                GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB (brightblack), 0, 1)
   end -- for
 
   -- draw a box around it
   check (WindowRectOp (status_win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
-          ColourNameToRGB ("lightgrey")))  -- frame entire box
+          ColourNameToRGB (brightblack)))  -- frame entire box
 
   vertical = vertical + font_height + 3
 end -- function
