@@ -15,6 +15,10 @@ function build_status_window()
 
   vertical = 6  -- pixel to start at
 
+  --insert rest of character information
+  DoInfo()
+
+  --insert health bars
   DoGauge(info_hp, hp, ColourNameToRGB(red) )
   DoGauge(info_sp, sp, ColourNameToRGB(blue) )
   DoGauge(info_ep, ep, ColourNameToRGB(green) )
@@ -23,24 +27,33 @@ end --function
 
 
 function init_statuswin()
-  GAUGE_LEFT = 70
+  local windows = WindowList()
+  if windows then
+    for _, v in ipairs (windows) do
+      WindowDelete (v)
+    end
+  end
+
+  GAUGE_LEFT = 61
   GAUGE_HEIGHT = 12
 
-  WINDOW_WIDTH = 250
-  WINDOW_HEIGHT = 65
-  NUMBER_OF_TICKS = 5
+  WINDOW_WIDTH = 300
+  WINDOW_HEIGHT = 140
+  NUMBER_OF_TICKS = 9
 
   BACKGROUND_COLOUR = ColourNameToRGB (background)
-  FONT_COLOUR = ColourNameToRGB (foreground)
+  FONT_COLOUR = ColourNameToRGB ("tomato")
   BORDER_COLOUR = ColourNameToRGB (brightblack)
   status_win = GetPluginID () .. "status_win"
-  status_font_id = "fn"
+  font_normal = "font_normal"
+  font_strike = "font_strike"
+  font_under = "font_under"
 
   local x, y, mode, flags =
      tonumber (GetVariable ("windowx")) or 0,
      tonumber (GetVariable ("windowy")) or 0,
      tonumber (GetVariable ("windowmode")) or 8, -- bottom right
-     tonumber (GetVariable ("windowflags")) or 0
+     tonumber (GetVariable ("windowflags")) or 4
 
   -- make miniwindow so I can grab the font info
   check (WindowCreate (status_win,
@@ -59,8 +72,10 @@ function init_statuswin()
                     "Drag to move",  -- tooltip text
                     1, 0)  -- hand cursor
    WindowDragHandler(status_win, "hs1", "dragmove", "dragrelease", 0)
-   check (WindowFont (status_win, status_font_id, miniwindow_font, miniwindow_font_size, false, false, false, false, 0, 0))  -- normal
-   font_height = WindowFontInfo (status_win, status_font_id, 1)  -- height
+   check (WindowFont (status_win, font_normal, miniwindow_font, miniwindow_font_size, false, false, false, false, 0, 0))  -- normal
+   check (WindowFont (status_win, font_strike, miniwindow_font, miniwindow_font_size, false, false, false, true, 0, 0))  -- normal
+   check (WindowFont (status_win, font_under, miniwindow_font, miniwindow_font_size, false, false, true, false, 0, 0))  -- normal
+   font_height = WindowFontInfo (status_win, font_normal, 1)  -- height
    if GetVariable ("enabled") == "false" then
      ColourNote ("yellow", "", "Warning: Plugin " .. GetPluginName ().. " is currently disabled.")
      check (EnablePlugin(GetPluginID (), false))
@@ -68,8 +83,8 @@ function init_statuswin()
    end -- they didn't enable us last time
  end -- OnPluginInstall
 
- function mousedown(flags, hotspot_id)
 
+ function mousedown(flags, hotspot_id)
   -- find where mouse is so we can adjust window relative to mouse
   startx, starty = WindowInfo (status_win, 14), WindowInfo (status_win, 15)
 
@@ -84,7 +99,7 @@ function dragmove(flags, hotspot_id)
                      WindowInfo (status_win, 18)
 
   -- move the window to the new location
-  WindowPosition(status_win, posx - startx, posy - starty, 0, 2);
+  WindowPosition(status_win, posx - startx, posy - starty, 0, 6);
 
   -- change the mouse cursor shape appropriately
   if posx < 0 or posx > GetInfo (281) or
@@ -97,13 +112,14 @@ function dragmove(flags, hotspot_id)
 end -- dragmove
 
 function dragrelease(flags, hotspot_id)
+
   local newx, newy = WindowInfo (status_win, 17), WindowInfo (status_win, 18)
 
   -- don't let them drag it out of view
   if newx < 0 or newx > GetInfo (281) or
      newy < 0 or newy > GetInfo (280) then
      -- put it back
-    WindowPosition(status_win, origx, origy, 0, 2);
+    WindowPosition(status_win, origx, origy, 0, 6);
   end -- if out of bounds
 
 end -- dragrelease
@@ -117,9 +133,9 @@ function DoGauge (sPrompt, Percent, Colour)
   if Fraction < 0 then Fraction = 0 end
 
 
-  local width = WindowTextWidth (status_win, status_font_id, sPrompt)
+  local width = WindowTextWidth (status_win, font_normal, sPrompt)
 
-  WindowText (status_win, status_font_id, sPrompt,
+  WindowText (status_win, font_normal, sPrompt,
                              GAUGE_LEFT - width, vertical, 0, 0, FONT_COLOUR)
 
   WindowRectOp (status_win, 2, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
@@ -158,5 +174,31 @@ function DoGauge (sPrompt, Percent, Colour)
   check (WindowRectOp (status_win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
           ColourNameToRGB (brightblack)))  -- frame entire box
 
-  vertical = vertical + font_height + 3
+  vertical = vertical + font_height + 1
 end -- function
+
+function DoInfo()
+  --exp, exptolvl, protolvl
+  DrawText (whoami .. "'s Status",font_under,"yes")
+
+  --ad, exptoadv, prototoadv
+  DrawText ("Meh one",font_normal,"yes")
+
+  --df, cash
+  DrawText ("Meh too",font_normal,"yes")
+
+  --phase, daytime, hour
+  DrawText ("Meh three",font_normal,"yes")
+
+  --status
+  DrawText ("Meh four",font_normal,"yes")
+end --function
+
+function DrawText(drawline,font_style,new_line)
+  local width =   WindowTextWidth (font_normal, font_style, drawline)
+  local height  = WindowFontInfo (status_win, font_style, 1)
+  WindowText (status_win, font_style, drawline, 5 - width, vertical, 0, 0, FONT_COLOUR)
+  if new_line == "yes" then
+    vertical = vertical + height + 1
+  end --if
+end --function

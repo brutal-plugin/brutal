@@ -69,7 +69,7 @@ end --function
 
 function infobar_display_hp(info_hp,bar_hp,per_hp)
   Info (" hp ")
-  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+  if track_update["source"] == "update" and os.difftime(os.time(), track_update["time"]) > 10 and track_update["hp"] == true then
     InfoFont(infobar_font,infobar_font_size,8)
   end --if
   InfoColour(ingame_prompt["hp_lite"])
@@ -101,7 +101,7 @@ end --function
 
 function infobar_display_sp(info_sp,bar_sp,per_sp)
   Info (" sp ")
-  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+  if track_update["source"] == "update" and os.difftime(os.time(), track_update["time"]) > 10 and track_update["sp"] == true then
     InfoFont(infobar_font,infobar_font_size,8)
   end --if
   InfoColour(ingame_prompt["sp_lite"])
@@ -133,7 +133,7 @@ end --function
 
 function infobar_display_ep(info_ep,bar_ep,per_ep)
   Info (" ep ")
-  if ingame_prompt["source"] == "update" and os.difftime(os.time(), ingame_prompt["updated"]) > 10 then
+  if track_update["source"] == "update" and os.difftime(os.time(), track_update["time"]) > 10 and track_update["ep"] == true then
     InfoFont(infobar_font,infobar_font_size,8)
   end --if
   InfoColour(ingame_prompt["ep_lite"])
