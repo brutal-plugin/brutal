@@ -31,8 +31,9 @@ end --function
 
 function activate_brutal ()
   wait.make (function()
+    --check if trigger name 'prompt_trigger' is enabled
     if GetTriggerInfo("prompt_trigger",8) == true then
-      EnableTriggerGroup ("brutal_plugin_triggers",false)
+      switch_triggers(false)
       --WindowShow (status_win, false)
       note ("#brutal deactivated .. restoring prompt")
       send ("#brutal")
@@ -43,7 +44,7 @@ function activate_brutal ()
       send ("alias #brutal")
       local alias_check = wait.regexp("^\#brutal.+$",1)
       if alias_check then
-          EnableTriggerGroup ("brutal_plugin_triggers",true)
+          switch_triggers (true)
           --WindowShow (status_win, true)
           note ("#brutal activated .. ")
           send ("")
@@ -70,3 +71,8 @@ function so_whoami()
     end --if
   end --if
 end --function
+
+function switch_triggers(args)
+  EnableTriggerGroup ("brutal_prompt_group",args)
+  EnableTriggerGroup ("reset_status",args)
+end

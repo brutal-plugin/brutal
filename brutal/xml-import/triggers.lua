@@ -6,7 +6,7 @@ ImportXML
      date_saved="2017-03-05 19:00:00"
     >
     <trigger
-      group="brutal_plugin_triggers"
+      group="brutal_prompt_group"
       match="#brutal hp (?&lt;truehp&gt;(-\d+)|\d+)\:(?&lt;maxhp&gt;\d+)\:(?&lt;hp&gt;\d+) sp (?&lt;truesp&gt;(-\d+)|\d+)\:(?&lt;maxsp&gt;\d+)\:(?&lt;sp&gt;\d+) ep (?&lt;trueep&gt;(-\d+)|\d+)\:(?&lt;maxep&gt;\d+)\:(?&lt;ep&gt;\d+) xp (?&lt;xp&gt;(-\d+)|\d+)\:(?&lt;exptolvl&gt;(-\d+|\d+))\:(?&lt;protolvl&gt;(-\d+|\d+))\% ad (?&lt;exptoadv&gt;(-\d+|\d+))\:(?&lt;protoadv&gt;(-\d+|\d+))\% df (?&lt;df&gt;\d+) \$\$ (?&lt;cash&gt;\d+) ph (?&lt;phase&gt;\S+) dt (?&lt;dt&gt;\S+) hr (?&lt;hr&gt;.+) st(?&lt;st&gt;.+)\:$"
       name="prompt_trigger"
       sequence="100"
@@ -18,7 +18,7 @@ ImportXML
     </trigger>
     <trigger
      enabled="y"
-     group="brutal_plugin_triggers"
+     group="brutal_prompt_group"
      keep_evaluating="y"
      match="^HP:\[(.+)\]\s+(?&lt;hp&gt;\d+)\%\s+SP:\[.+\]\s+(?&lt;sp&gt;\d+)\%\s+EP:\[.+\]\s+(?&lt;ep&gt;\d+)\%$"
      name="healthbar_trigger"
@@ -30,27 +30,7 @@ ImportXML
     </trigger>
     <trigger
      enabled="y"
-     group="brutal_plugin_triggers"
-     keep_evaluating="y"
-     match="^You are prepared to release the spell\.$"
-     regexp="y"
-     script="clear_prompt_status"
-     sequence="100"
-    >
-    </trigger>
-    <trigger
-     enabled="y"
-     group="brutal_plugin_triggers"
-     keep_evaluating="y"
-     match="^You are done building the camping place\.$"
-     regexp="y"
-     script="clear_prompt_status"
-     sequence="100"
-    >
-    </trigger>
-    <trigger
-     enabled="y"
-     group="brutal_plugin_triggers"
+     group="brutal_prompt_group"
      keep_evaluating="y"
      match="^You feel fully healed\.$"
      regexp="y"
@@ -60,7 +40,7 @@ ImportXML
     </trigger>
     <trigger
      enabled="y"
-     group="brutal_plugin_triggers"
+     group="brutal_prompt_group"
      keep_evaluating="y"
      match="^You feel fully rested\.$"
      regexp="y"
@@ -70,11 +50,41 @@ ImportXML
     </trigger>
     <trigger
      enabled="y"
-     group="brutal_plugin_triggers"
+     group="brutal_prompt_group"
      keep_evaluating="y"
      match="^Your magical power has returned to full strength\.$"
      regexp="y"
      script="fully_magical"
+     sequence="100"
+    >
+    </trigger>
+    <trigger
+     enabled="y"
+     group="reset_status"
+     keep_evaluating="y"
+     match="^You are prepared to release the spell\.$"
+     regexp="y"
+     script="clear_prompt_status"
+     sequence="100"
+    >
+    </trigger>
+    <trigger
+     enabled="y"
+     group="reset_status"
+     keep_evaluating="y"
+     match="^You decide to try a combat maneuver\!\.$"
+     regexp="y"
+     script="clear_prompt_status"
+     sequence="100"
+    >
+    </trigger>
+    <trigger
+     enabled="y"
+     group="reset_status"
+     keep_evaluating="y"
+     match="^You are done building the camping place\.$"
+     regexp="y"
+     script="clear_prompt_status"
      sequence="100"
     >
     </trigger>

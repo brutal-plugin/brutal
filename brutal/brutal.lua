@@ -5,16 +5,16 @@ GLOBAL CONFIGURATIONS
 
 ]]--
 
---mushclient functions
+--load mushclient functions
 require "wait"
 require "tprint"
 require "commas"
-require "getstyle"
 
 --mushclient function alias
 note = Note
 send = SendNoEcho
 
+--load plugin script files
 require "xml-import.aliases"
 require "xml-import.triggers"
 require "config.variables"

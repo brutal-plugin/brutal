@@ -18,14 +18,16 @@ function OnPluginInstall()
   InfoColour(foreground)
   brutal_logo()
   brutal_arguments()
-  EnableTriggerGroup ("brutal_plugin_triggers",false)
-  set_gags()
-  init_statuswin()
+  EnableTriggerGroup ("brutal_prompt_group",false)
+  EnableTriggerGroup ("reset_status",false)
+  setup_gags()
+  --init_statuswin()
   if GetOption("enable_speed_walk") == 1 then
     note ("#brutal alias may conflict with speedwalk prefix '#', temporary disable speedwalks to configure #brutal ..")
   end --if
 end --function
 
+--[[
 function OnPluginDisable ()
   WindowShow (status_win, false)
 end -- OnPluginDisable
@@ -37,6 +39,7 @@ function OnPluginSaveState ()
   SetVariable ("windowmode", tostring (WindowInfo (status_win, 7)))
   SetVariable ("windowflags", tostring (WindowInfo (status_win, 8)))
 end -- OnPluginSaveState
+]]--
 
 function kilomili(number)
   if string.len(number) < 5 then
@@ -51,7 +54,7 @@ function kilomili(number)
   return (number)
 end --function
 
-function set_gags()
+function setup_gags()
   if gag_ingame_prompt == true then
     SetTriggerOption("prompt_trigger","omit_from_output",1)
   else
