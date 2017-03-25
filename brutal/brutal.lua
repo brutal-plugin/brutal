@@ -19,12 +19,13 @@ require "xml-import.aliases"
 require "xml-import.triggers"
 require "config.variables"
 require "config.help"
+require "config.misc"
 require "global.alias"
 require "prompt.extract"
 require "prompt.capture"
 require "prompt.update"
-require "config.infobar"
-require "config.misc"
+require "miniwin.infobar"
+require "miniwin.status"
 
 
 --[[
