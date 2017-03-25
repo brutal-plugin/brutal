@@ -42,6 +42,10 @@ USER CONFIGURATION OPTIONS
 infobar_font = "consolas"
 infobar_font_size = 8
 
+--miniwindow font and size
+miniwindow_font = "consolas"
+miniwindow_font_size = 8 
+
 --set ingame terminal
 terminal = "180x100"
 

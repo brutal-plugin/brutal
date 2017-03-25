@@ -21,7 +21,7 @@ function OnPluginInstall()
   EnableTriggerGroup ("brutal_prompt_group",false)
   EnableTriggerGroup ("reset_status",false)
   setup_gags()
-  --init_statuswin()
+  init_stat_win()
   if GetOption("enable_speed_walk") == 1 then
     note ("#brutal alias may conflict with speedwalk prefix '#', temporary disable speedwalks to configure #brutal ..")
   end --if

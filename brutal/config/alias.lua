@@ -34,7 +34,6 @@ function activate_brutal ()
     --check if trigger name 'prompt_trigger' is enabled
     if GetTriggerInfo("prompt_trigger",8) == true then
       switch_triggers(false)
-      --WindowShow (status_win, false)
       note ("#brutal deactivated .. restoring prompt")
       send ("#brutal")
       InfoClear()
@@ -45,7 +44,6 @@ function activate_brutal ()
       local alias_check = wait.regexp("^\#brutal.+$",1)
       if alias_check then
           switch_triggers (true)
-          --WindowShow (status_win, true)
           note ("#brutal activated .. ")
           send ("")
           local prompt_check =  wait.regexp("^\#brutal.+$",1)
@@ -75,4 +73,5 @@ end --function
 function switch_triggers(args)
   EnableTriggerGroup ("brutal_prompt_group",args)
   EnableTriggerGroup ("reset_status",args)
+  WindowShow (stat_win, args)
 end
