@@ -19,9 +19,9 @@ function build_stat_window()
   DoInfo()
 
   --insert health bars
-  DoGauge(info_hp, hp, ColourNameToRGB(red) )
-  DoGauge(info_sp, sp, ColourNameToRGB(blue) )
-  DoGauge(info_ep, ep, ColourNameToRGB(green) )
+  DoGauge(info_hp, hp, RED )
+  DoGauge(info_sp, sp, BLUE )
+  DoGauge(info_ep, ep, GREEN )
 
 end --function
 
@@ -154,7 +154,7 @@ function DoGauge (sPrompt, Percent, Colour)
   -- ticks
   for i = 1, NUMBER_OF_TICKS do
     WindowLine (stat_win, GAUGE_LEFT + (i * ticks_at), vertical,
-                GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB (brightblack), 0, 1)
+                GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, BRIGHTBLACK, 0, 1)
   end -- for
 
   -- draw a box around it

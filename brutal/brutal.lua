@@ -20,7 +20,7 @@ require "xml-import.triggers"
 require "config.variables"
 require "config.help"
 require "config.misc"
-require "global.alias"
+require "config.alias"
 require "prompt.extract"
 require "prompt.capture"
 require "prompt.update"
@@ -44,7 +44,7 @@ infobar_font_size = 8
 
 --miniwindow font and size
 miniwindow_font = "consolas"
-miniwindow_font_size = 8 
+miniwindow_font_size = 8
 
 --set ingame terminal
 terminal = "180x100"
