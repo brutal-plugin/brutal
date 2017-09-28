@@ -21,6 +21,7 @@ function capture_prompt(name,line,wildcards,styles)
   track_update["ep"] = false
   --build the infobar
   build_infobar()
+  build_stat_window()
 end --function
 
 function make_bar_colours (mypercent)

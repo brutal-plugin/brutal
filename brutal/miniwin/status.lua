@@ -1,12 +1,4 @@
 function build_stat_window()
-  local hp = ingame_prompt["hp"]
-  local sp = ingame_prompt["sp"]
-  local ep = ingame_prompt["ep"]
-
-  local info_hp = ("HP" .. string.format("%4s",hp) .. "% ")
-  local info_sp = ("SP" .. string.format("%4s",sp) .. "% ")
-  local info_ep = ("EP" .. string.format("%4s",ep) .. "% ")
-
   -- fill entire box to clear it
   check (WindowRectOp (stat_win, 2, 0, 0, 0, 0, BACKGROUND))  -- fill entire box
 
@@ -18,11 +10,18 @@ function build_stat_window()
   --insert rest of character information
   DoInfo()
 
+  --get the healthbar percentages
+  local hp = ingame_prompt["hp"]
+  local sp = ingame_prompt["sp"]
+  local ep = ingame_prompt["ep"]
+
+  local info_hp = ("HP" .. string.format("%4s",hp) .. "% ")
+  local info_sp = ("SP" .. string.format("%4s",sp) .. "% ")
+  local info_ep = ("EP" .. string.format("%4s",ep) .. "% ")
   --insert health bars
   DoGauge(info_hp, hp, RED )
   DoGauge(info_sp, sp, BLUE )
   DoGauge(info_ep, ep, GREEN )
-
 end --function
 
 
@@ -165,20 +164,10 @@ function DoGauge (sPrompt, Percent, Colour)
 end -- function
 
 function DoInfo()
-  --exp, exptolvl, protolvl
+  --exp, exptolvl, protolvl]
+
   DrawText (whoami .. "'s Status",font_under,"yes")
 
-  --ad, exptoadv, prototoadv
-  DrawText ("Meh one",font_normal,"yes")
-
-  --df, cash
-  DrawText ("Meh too",font_normal,"yes")
-
-  --phase, daytime, hour
-  DrawText ("Meh three",font_normal,"yes")
-
-  --status
-  DrawText ("Meh four",font_normal,"yes")
 end --function
 
 function DrawText(drawline,font_style,new_line)
