@@ -23,6 +23,7 @@ This plugin will add an infobar and a floating miniwindow in mushclient
 * errors may crop up if your internet connection is too laggy
 * every care has been taken not to violate games rules on "help triggers". if you feel a part of my code violates/breaks these rules. please mudmail/tell me immediately.
 * with above point, triggers are set based from input from the prompt. if the prompt is not updated manually (by being unilde) then values may not correspond to real values.
+* you can change some variables by editing brutal\config\user.lua such as font, font size and even install my personal brutal colour scheme.
 
 ## **#todo and coming soon**
 
