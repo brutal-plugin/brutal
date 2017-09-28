@@ -30,7 +30,7 @@ function init_stat_win()
   GAUGE_HEIGHT = 12
 
   WINDOW_WIDTH = 300
-  WINDOW_HEIGHT = 140
+  WINDOW_HEIGHT = 210
   NUMBER_OF_TICKS = 9
   BORDER_COLOUR = BRIGHTBLACK
 
@@ -166,11 +166,37 @@ end -- function
 function DoInfo()
   --exp, exptolvl, protolvl]
 
-  DrawText (whoami .. "'s Status",font_under,"yes")
+  DrawText (whoami .. "'s Game Status")
+
+  local xp = commas(ingame_prompt["xp"])
+  local exptolvl = commas(ingame_prompt["exptolvl"])
+  local protolvl = ingame_prompt["protolvl"]
+  local exptoadv = commas(ingame_prompt["exptoadv"])
+  local protoadv = ingame_prompt["protoadv"]
+  local cash = commas(ingame_prompt["cash"])
+  local df = commas(ingame_prompt["df"])
+  local dt = ingame_prompt["dt"]
+  local hr = string.lower(ingame_prompt["hr"])
+  local phase = ingame_prompt["phase"]
+
+  DrawText ("")
+  DrawText ("EXP   : " .. xp .. "/" .. exptolvl .. (" (") .. protolvl .. "%)")
+  DrawText ("ADV   : " .. exptoadv .. " (" .. protoadv .. "%)")
+  DrawText ("CASH  : " .. cash)
+  DrawText ("DF    : " .. df)
+  DrawText ("TIME  : " .. dt .. ", " .. hr)
+  DrawText ("PHASE : " .. phase)
+  DrawText ("")
 
 end --function
 
 function DrawText(drawline,font_style,new_line)
+  if not font_style then
+    font_style = font_normal
+  end --if
+  if not new_line then
+    new_line = "yes"
+  end --if
   local width =   WindowTextWidth (font_normal, font_style, drawline)
   local height  = WindowFontInfo (stat_win, font_style, 1)
   WindowText (stat_win, font_style, drawline, 5 - width, vertical, 0, 0, FOREGROUND)
