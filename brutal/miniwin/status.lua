@@ -26,6 +26,7 @@ end --function
 
 
 function init_stat_win()
+  --shamelessly modified from nick gammon
   GAUGE_LEFT = 61
   GAUGE_HEIGHT = 12
 
@@ -33,7 +34,6 @@ function init_stat_win()
   WINDOW_HEIGHT = 210
   NUMBER_OF_TICKS = 9
   BORDER_COLOUR = BRIGHTBLACK
-
 
   local x, y, mode, flags =
      tonumber (GetVariable ("windowx")) or 0,
@@ -68,7 +68,6 @@ function init_stat_win()
      return
    end -- they didn't enable us last time
  end -- OnPluginInstall
-
 
  function mousedown(flags, hotspot_id)
   -- find where mouse is so we can adjust window relative to mouse
@@ -164,7 +163,6 @@ function DoGauge (sPrompt, Percent, Colour)
 end -- function
 
 function DoInfo()
-  --exp, exptolvl, protolvl]
  local status = ingame_prompt["st"]
   DrawText (whoami .. "'s Game Status" .. "  " .. status)
 

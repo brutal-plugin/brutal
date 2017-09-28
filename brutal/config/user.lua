@@ -19,7 +19,6 @@ miniwindow_font_size = 8
 --set ingame terminal
 terminal = "180x100"
 
-
 --gag ingame prompt
 gag_ingame_prompt = true
 
