@@ -165,8 +165,8 @@ end -- function
 
 function DoInfo()
   --exp, exptolvl, protolvl]
-
-  DrawText (whoami .. "'s Game Status")
+ local status = ingame_prompt["st"]
+  DrawText (whoami .. "'s Game Status" .. "  " .. status)
 
   local xp = commas(ingame_prompt["xp"])
   local exptolvl = commas(ingame_prompt["exptolvl"])
