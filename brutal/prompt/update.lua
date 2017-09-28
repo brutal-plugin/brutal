@@ -9,12 +9,14 @@ function healthbar_update(name,line,wildcards)
      end --if
   end --for
   build_infobar()
+  build_stat_window()
 end --function
 
 function clear_prompt_status()
   ingame_prompt["st"] = " "
   track_update["source"] = "status"
   build_infobar()
+  build_stat_window()
 end --function
 
 function fully_healed()
@@ -24,6 +26,7 @@ function fully_healed()
   track_update["source"] = "update"
   track_update["hp"] = true
   build_infobar()
+  build_stat_window()
 end --function
 
 function  fully_magical()
@@ -32,6 +35,7 @@ function  fully_magical()
   ingame_prompt["bar_sp_lite"] = brightblack
   track_update["source"] = "update"
   track_update["sp"] = true
+  build_stat_window()
   build_infobar()
 end --function
 
@@ -42,4 +46,5 @@ function fully_rested()
   track_update["source"] = "update"
   track_update["ep"] = true
   build_infobar()
+  build_stat_window()
 end --function
