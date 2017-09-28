@@ -25,6 +25,9 @@
   local plugin_path
   plugin_path = GetInfo(60) .. "brutal-plugin\\brutal\\?.lua"
   package.path = package.path .. ";" .. plugin_path
+  plugin_path = GetInfo(60) .. "brutal-master\\brutal\\?.lua"
+  package.path = package.path .. ";" .. plugin_path
+
 
   --load main config file
   require "brutal"
