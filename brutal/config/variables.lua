@@ -4,6 +4,7 @@ brutal_regex = "#brutal hp (?<truehp>(-\d+)|\d+)\:(?<maxhp>\d+)\:(?<hp>\d+) sp (
 ingame_prompt = {}
 track_update = {}
 stat_win = GetPluginID() .. ":status_win"
+chat_win = GetPluginID() .. ":chat_win"
 font_normal = "font_normal"
 font_strike = "font_strike"
 font_under = "font_under"

@@ -70,14 +70,15 @@ function init_stat_win()
  end -- OnPluginInstall
 
  function mousedown(flags, hotspot_id)
+   print (stat_win)
   -- find where mouse is so we can adjust window relative to mouse
   startx, starty = WindowInfo (stat_win, 14), WindowInfo (stat_win, 15)
 
   -- find where window is in case we drag it offscreen
   origx, origy = WindowInfo (stat_win, 10), WindowInfo (stat_win, 11)
-end -- mousedown
+ end -- mousedown
 
-function dragmove(flags, hotspot_id)
+ function dragmove(flags, hotspot_id)
 
   -- find where it is now
   local posx, posy = WindowInfo (stat_win, 17),
@@ -94,9 +95,9 @@ function dragmove(flags, hotspot_id)
     check (SetCursor ( 1))   -- hand cursor
   end -- if
 
-end -- dragmove
+ end -- dragmove
 
-function dragrelease(flags, hotspot_id)
+ function dragrelease(flags, hotspot_id)
 
   local newx, newy = WindowInfo (stat_win, 17), WindowInfo (stat_win, 18)
 
@@ -107,8 +108,7 @@ function dragrelease(flags, hotspot_id)
     WindowPosition(stat_win, origx, origy, 0, 6);
   end -- if out of bounds
 
-end -- dragrelease
-
+ end -- dragrelease
 
 function DoGauge (sPrompt, Percent, Colour)
 
