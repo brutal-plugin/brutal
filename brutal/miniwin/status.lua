@@ -1,204 +1,52 @@
-function build_stat_window()
-  -- fill entire box to clear it
-  check (WindowRectOp (stat_win, 2, 0, 0, 0, 0, BACKGROUND))  -- fill entire box
+function init_stats_win()
 
-  -- Edge around box rectangle
-  check (WindowCircleOp (stat_win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
+  -- get the font information they may have saved last time
+  fontSize = miniwindow_font_size or 8
+  fontName = miniwindow_font or GetInfo(23)
 
-  vertical = 6  -- pixel to start at
+  windowTextColour = WHITE
+  windowBackgroundColour = BLACK
+  windowTitleTextColour = BRIGHTWHITE
+  windowTitleBackgroundColour = BRIGHTBLACK
 
-  --insert rest of character information
-  DoInfo()
-
-  --get the healthbar percentages
-  local hp = ingame_prompt["hp"]
-  local sp = ingame_prompt["sp"]
-  local ep = ingame_prompt["ep"]
-
-  local info_hp = ("HP" .. string.format("%4s",hp) .. "% ")
-  local info_sp = ("SP" .. string.format("%4s",sp) .. "% ")
-  local info_ep = ("EP" .. string.format("%4s",ep) .. "% ")
-  --insert health bars
-  DoGauge(info_hp, hp, RED )
-  DoGauge(info_sp, sp, BLUE )
-  DoGauge(info_ep, ep, GREEN )
-end --function
-
-
-function init_stat_win()
-  --shamelessly modified from nick gammon
-  GAUGE_LEFT = 61
-  GAUGE_HEIGHT = 12
-
-  WINDOW_WIDTH = 300
-  WINDOW_HEIGHT = 210
-  NUMBER_OF_TICKS = 9
-  BORDER_COLOUR = BRIGHTBLACK
-
-  local x, y, mode, flags =
-     tonumber (GetVariable ("windowx")) or 0,
-     tonumber (GetVariable ("windowy")) or 0,
-     tonumber (GetVariable ("windowmode")) or 8, -- bottom right
-     tonumber (GetVariable ("windowflags")) or 4
-
-  -- make miniwindow so I can grab the font info
-  check (WindowCreate (stat_win,
-                x, y, WINDOW_WIDTH, WINDOW_HEIGHT,
-                mode,
-                flags,
-                BACKGROUND) )
-   -- make a hotspot
-   WindowAddHotspot(stat_win, "hs1",
-                    0, 0, 0, 0,   -- whole window
-                    "",   -- MouseOver
-                    "",   -- CancelMouseOver
-                    "mousedown",
-                    "",   -- CancelMouseDown
-                    "",   -- MouseUp
-                    "Drag to move",  -- tooltip text
-                    1, 0)  -- hand cursor
-   WindowDragHandler(stat_win, "hs1", "dragmove", "dragrelease", 0)
-   check (WindowFont (stat_win, font_normal, miniwindow_font, miniwindow_font_size, false, false, false, false, 0, 0))  -- normal
-   check (WindowFont (stat_win, font_strike, miniwindow_font, miniwindow_font_size, false, false, false, true, 0, 0))  -- normal
-   check (WindowFont (stat_win, font_under, miniwindow_font, miniwindow_font_size, false, false, true, false, 0, 0))  -- normal
-   font_height = WindowFontInfo (stat_win, font_normal, 1)  -- height
-   if GetVariable ("enabled") == "false" then
-     ColourNote ("yellow", "", "Warning: Plugin " .. GetPluginName ().. " is currently disabled.")
-     check (EnablePlugin(GetPluginID (), false))
-     return
-   end -- they didn't enable us last time
- end -- OnPluginInstall
-
- function mousedown(flags, hotspot_id)
-   print (stat_win)
-  -- find where mouse is so we can adjust window relative to mouse
-  startx, starty = WindowInfo (stat_win, 14), WindowInfo (stat_win, 15)
-
-  -- find where window is in case we drag it offscreen
-  origx, origy = WindowInfo (stat_win, 10), WindowInfo (stat_win, 11)
- end -- mousedown
-
- function dragmove(flags, hotspot_id)
-
-  -- find where it is now
-  local posx, posy = WindowInfo (stat_win, 17),
-                     WindowInfo (stat_win, 18)
-
-  -- move the window to the new location
-  WindowPosition(stat_win, posx - startx, posy - starty, 0, 6);
-
-  -- change the mouse cursor shape appropriately
-  if posx < 0 or posx > GetInfo (281) or
-     posy < 0 or posy > GetInfo (280) then
-    check (SetCursor ( 11))   -- X cursor
+  FONT_ID = font_normal
+  WINDOW_POSITION = miniwin.pos_bottom_right
+  if not whoami then
+    player_name =  "Player"
   else
-    check (SetCursor ( 1))   -- hand cursor
-  end -- if
+    player_name = whoami
+  end
+  title = player_name .. "'s Game Status"
 
- end -- dragmove
+  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
 
- function dragrelease(flags, hotspot_id)
+  -- make the window
+  WindowCreate (stats_win,  windowinfo.window_left,
+                      windowinfo.window_top,
+                      windowWidth,
+                      windowHeight,
+                      windowinfo.window_mode,
+                      windowinfo.window_flags,
+                      windowBackgroundColour)  -- create window
 
-  local newx, newy = WindowInfo (stat_win, 17), WindowInfo (stat_win, 18)
+  -- grab a font
+  WindowFont (stats_win, FONT_ID, fontName, fontSize) -- define font
 
-  -- don't let them drag it out of view
-  if newx < 0 or newx > GetInfo (281) or
-     newy < 0 or newy > GetInfo (280) then
-     -- put it back
-    WindowPosition(stat_win, origx, origy, 0, 6);
-  end -- if out of bounds
+  -- work out how high it is
+  fontHeight = WindowFontInfo (stats_win, FONT_ID, 1)   -- height of the font
 
- end -- dragrelease
+  -- how big the title box is
+  titleBoxHeight = fontHeight + TEXT_INSET * 2
+  -- useable area for text
+  windowClientHeight = windowHeight - titleBoxHeight
 
-function DoGauge (sPrompt, Percent, Colour)
+  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
+  WindowRectOp (stats_win, miniwin.rect_fill, 0, 0, 0, titleBoxHeight, windowTitleBackgroundColour)
+  WindowText (stats_win, FONT_ID, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
+  WindowRectOp (stats_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
 
-  local Fraction = tonumber (Percent) / 100
+end --function
 
-  if Fraction > 1 then Fraction = 1 end
-  if Fraction < 0 then Fraction = 0 end
+function build_stats_win()
 
-
-  local width = WindowTextWidth (stat_win, font_normal, sPrompt)
-
-  WindowText (stat_win, font_normal, sPrompt,
-                             GAUGE_LEFT - width, vertical, 0, 0, FOREGROUND)
-
-  WindowRectOp (stat_win, 2, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
-                          BACKGROUND)  -- fill entire box
-
-
-  local gauge_width = (WINDOW_WIDTH - GAUGE_LEFT - 5) * Fraction
-
-   -- box size must be > 0 or WindowGradient fills the whole thing
-  if math.floor (gauge_width) > 0 then
-
-    -- top half
-    WindowGradient (stat_win, GAUGE_LEFT, vertical, GAUGE_LEFT + gauge_width, vertical + GAUGE_HEIGHT / 2,
-                    0x000000,
-                    Colour, 2)
-
-    -- bottom half
-    WindowGradient (stat_win, GAUGE_LEFT, vertical + GAUGE_HEIGHT / 2,
-                    GAUGE_LEFT + gauge_width, vertical +  GAUGE_HEIGHT,
-                    Colour,
-                    0x000000,
-                    2)
-
-  end -- non-zero
-
-  -- show ticks
-  local ticks_at = (WINDOW_WIDTH - GAUGE_LEFT - 5) / (NUMBER_OF_TICKS + 1)
-
-  -- ticks
-  for i = 1, NUMBER_OF_TICKS do
-    WindowLine (stat_win, GAUGE_LEFT + (i * ticks_at), vertical,
-                GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, BRIGHTBLACK, 0, 1)
-  end -- for
-
-  -- draw a box around it
-  check (WindowRectOp (stat_win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
-          ColourNameToRGB (brightblack)))  -- frame entire box
-
-  vertical = vertical + font_height + 1
 end -- function
-
-function DoInfo()
- local status = ingame_prompt["st"]
-  DrawText (whoami .. "'s Game Status" .. "  " .. status)
-
-  local xp = commas(ingame_prompt["xp"])
-  local exptolvl = commas(ingame_prompt["exptolvl"])
-  local protolvl = ingame_prompt["protolvl"]
-  local exptoadv = commas(ingame_prompt["exptoadv"])
-  local protoadv = ingame_prompt["protoadv"]
-  local cash = commas(ingame_prompt["cash"])
-  local df = commas(ingame_prompt["df"])
-  local dt = ingame_prompt["dt"]
-  local hr = string.lower(ingame_prompt["hr"])
-  local phase = ingame_prompt["phase"]
-
-  DrawText ("")
-  DrawText ("EXP   : " .. xp .. "/" .. exptolvl .. (" (") .. protolvl .. "%)")
-  DrawText ("ADV   : " .. exptoadv .. " (" .. protoadv .. "%)")
-  DrawText ("CASH  : " .. cash)
-  DrawText ("DF    : " .. df)
-  DrawText ("TIME  : " .. dt .. ", " .. hr)
-  DrawText ("PHASE : " .. phase)
-  DrawText ("")
-
-end --function
-
-function DrawText(drawline,font_style,new_line)
-  if not font_style then
-    font_style = font_normal
-  end --if
-  if not new_line then
-    new_line = "yes"
-  end --if
-  local width =   WindowTextWidth (font_normal, font_style, drawline)
-  local height  = WindowFontInfo (stat_win, font_style, 1)
-  WindowText (stat_win, font_style, drawline, 5 - width, vertical, 0, 0, FOREGROUND)
-  if new_line == "yes" then
-    vertical = vertical + height + 1
-  end --if
-end --function

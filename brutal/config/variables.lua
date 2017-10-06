@@ -3,11 +3,15 @@ brutal_prompt = "[cyan]#[reset]brutal [cyan]hp [reset][hplite][truehp]:[truemaxh
 brutal_regex = "#brutal hp (?<truehp>(-\d+)|\d+)\:(?<maxhp>\d+)\:(?<hp>\d+) sp (?<truesp>(-\d+)|\d+)\:(?<maxsp>\d+)\:(?<sp>\d+) ep (?<trueep>(-\d+)|\d+)\:(?<maxep>\d+)\:(?<ep>\d+) xp (?<xp>(-\d+)|\d+)\:(?<exptolvl>(-\d+|\d+))\:(?<protolvl>(-\d+|\d+))\% ad (?<exptoadv>(-\d+|\d+))\:(?<protoadv>(-\d+|\d+))\% df (?<df>\d+) \$\$ (?<cash>\d+) ph (?<phase>\S+) dt (?<dt>\S+) hr (?<hr>.+) st(?<st>.+)\:$"
 ingame_prompt = {}
 track_update = {}
-stat_win = GetPluginID() .. ":status_win"
-chat_win = GetPluginID() .. ":chat_win"
+stats_win = "stats_" .. GetPluginID()
+comms_win = "comms_" .. GetPluginID()
+party_win = "party_" .. GetPluginID()
 font_normal = "font_normal"
 font_strike = "font_strike"
 font_under = "font_under"
+windowWidth = 400
+windowHeight = 200
+TEXT_INSET = 5
 
 --colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
@@ -26,7 +30,7 @@ brightblue = RGBColourToName(GetBoldColour(5))
 brightmagenta = RGBColourToName(GetBoldColour(7))
 brightcyan = RGBColourToName(GetBoldColour(7))
 brightwhite = RGBColourToName(GetBoldColour(8))
-foreground = brightwhite
+foreground = white
 background = black
 
 BLACK = ColourNameToRGB (RGBColourToName(GetNormalColour(1)))
@@ -46,4 +50,4 @@ BRIGHTMAGENTA = ColourNameToRGB (RGBColourToName(GetBoldColour(7)))
 BRIGHTCYAN = ColourNameToRGB (RGBColourToName(GetBoldColour(7)))
 BRIGHTWHITE = ColourNameToRGB (RGBColourToName(GetBoldColour(8)))
 FOREGROUND = BRIGHTWHITE
-BACKGROUND = BLACK
+BACKGROUND = BRIGHTBLACK

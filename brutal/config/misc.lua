@@ -20,27 +20,15 @@ function OnPluginInstall()
   brutal_arguments()
   EnableTriggerGroup ("brutal_prompt_group",false)
   EnableTriggerGroup ("reset_status",false)
+  EnableTriggerGroup ("brutal_comms_group",false)
   setup_gags()
-  init_stat_win()
-  init_chat_win()
+  init_stats_win()
+  init_comms_win()
   if GetOption("enable_speed_walk") == 1 then
     note ("#brutal alias may conflict with speedwalk prefix '#', temporary disable speedwalks to configure #brutal ..")
   end --if
 end --function
 
---[[
-function OnPluginDisable ()
-  WindowShow (status_win, false)
-end -- OnPluginDisable
-
-function OnPluginSaveState ()
-  SetVariable ("enabled", tostring (GetPluginInfo (GetPluginID (), 17)))
-  SetVariable ("windowx", tostring (WindowInfo (status_win, 10)))
-  SetVariable ("windowy", tostring (WindowInfo (status_win, 11)))
-  SetVariable ("windowmode", tostring (WindowInfo (status_win, 7)))
-  SetVariable ("windowflags", tostring (WindowInfo (status_win, 8)))
-end -- OnPluginSaveState
-]]--
 
 function kilomili(number)
   if string.len(number) < 5 then

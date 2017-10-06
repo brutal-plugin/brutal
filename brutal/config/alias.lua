@@ -73,5 +73,9 @@ end --function
 function switch_triggers(args)
   EnableTriggerGroup ("brutal_prompt_group",args)
   EnableTriggerGroup ("reset_status",args)
-  WindowShow (stat_win, args)
+  EnableTriggerGroup ("brutal_comms_group",args)
+  init_stats_win()
+  WindowShow (stats_win, args)
+  init_comms_win()
+  WindowShow (comms_win, args)
 end
