@@ -9,15 +9,15 @@ USER CONFIGURATION OPTIONS
 --require "xml-import.theme"
 
 --infobar font and size
---infobar_font = "Fixedsys"
+infobar_font = "Consolas"
 --GetInfo (20) will grab the output window font
-infobar_font = GetInfo(20)
+--infobar_font = GetInfo(20)
 infobar_font_size = 8
 
 --miniwindow font and size
---miniwindow_font = "Fixedsys"
+miniwindow_font = "Consolas"
 --GetInfo (23) will grab the current input font
-miniwindow_font = GetInfo(23)
+--miniwindow_font = GetInfo(23)
 miniwindow_font_size = 8
 
 --set ingame terminal

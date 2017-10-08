@@ -45,8 +45,39 @@ function init_stats_win()
   WindowText (stats_win, FONT_ID, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
   WindowRectOp (stats_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
 
+  sprite_width =  WindowImageInfo(stats_win, "hp.png", 2)
+  sprite_height = WindowImageInfo(stats_win, "hp.png", 3)
+
+  LoadAllSprites()
+  for k, v in pairs (sprites) do
+    WindowLoadImageMemory (stats_win, k, sprites[k]) -- load image from memory
+    -- sprite_width or math.max (gauge_left,  WindowTextWidth (win, font_id, "Mana: "))
+
+  end --for
+
+  print (sprite_width, sprite_height)
+
+  WindowDrawImage (stats_win, "hp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET, 0, 0, miniwin.image_copy)  -- draw it
+  WindowDrawImage (stats_win, "sp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 1, 0, 0, miniwin.image_copy)  -- draw it
+  WindowDrawImage (stats_win, "ep.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 2, 0, 0, miniwin.image_copy)  -- draw it
+
+  WindowText (stats_win, FONT_ID, "HP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
+  WindowText (stats_win, FONT_ID, "SP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
+  WindowText (stats_win, FONT_ID, "EP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
+
 end --function
 
 function build_stats_win()
 
 end -- function
+
+function LoadAllSprites ()
+  local path = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\"
+  local files = {"hp.png","sp.png","ep.png"}
+  sprites = {}
+  for k, v in pairs (files) do
+    local f = assert (io.open (path .. v, "rb"))  -- open read-only, binary mode
+    sprites[v] = f:read ("*a")  -- read all of it
+    f:close ()  -- close it
+  end --for
+end --function
