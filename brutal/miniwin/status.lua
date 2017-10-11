@@ -55,8 +55,12 @@ function init_stats_win()
 
   end --for
 
+  WindowCircleOp (stats_win, miniwin.circle_ellipse, -- circle
+                  (TEXT_INSET+ TEXT_INSET), (titleBoxHeight+ TEXT_INSET), 4*(TEXT_INSET+ TEXT_INSET),4*(titleBoxHeight+ TEXT_INSET),                -- Left, Top, Right, Bottom
+                  BLUE, miniwin.pen_solid, 2, -- pen width 2
+                  BACKGROUND, miniwin.brush_null)  -- brush
+--[[
   print (sprite_width, sprite_height)
-
   WindowDrawImage (stats_win, "hp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET, 0, 0, miniwin.image_copy)  -- draw it
   WindowDrawImage (stats_win, "sp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 1, 0, 0, miniwin.image_copy)  -- draw it
   WindowDrawImage (stats_win, "ep.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 2, 0, 0, miniwin.image_copy)  -- draw it
@@ -64,7 +68,7 @@ function init_stats_win()
   WindowText (stats_win, FONT_ID, "HP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
   WindowText (stats_win, FONT_ID, "SP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
   WindowText (stats_win, FONT_ID, "EP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-
+]]--
 end --function
 
 function build_stats_win()
