@@ -56,3 +56,9 @@ function setup_gags()
     SetTriggerOption("healthbar_trigger","omit_from_output",0)
   end --if
 end --function
+
+  function OnPluginSaveState ()
+  -- save window current location for next time
+  movewindow.save_state (stats_win)
+  movewindow.save_state (comms_win)
+end -- function OnPluginSaveState

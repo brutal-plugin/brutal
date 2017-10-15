@@ -62,44 +62,19 @@
     vertical = vertical + font_height + 3
   end -- function
 
-  function do_prompt (name, line, wildcards)
-
-    local hp, max_hp = tonumber (wildcards [1]), tonumber (wildcards [2])
-    local mana, max_mana = tonumber (wildcards [3]), tonumber (wildcards [4])
-    local move, max_move = tonumber (wildcards [5]), tonumber (wildcards [6])
-
-    local hp_percent = hp / max_hp
-    local mana_percent = mana / max_mana
-    local move_percent = move / max_move
-
-    -- fill entire box to clear it
-    check (WindowRectOp (stats_win, 2, 0, 0, 0, 0, BACKGROUND_COLOUR))  -- fill entire box
-
-    -- Edge around box rectangle
-    check (WindowCircleOp (stats_win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
-
-    vertical = 6  -- pixel to start at
-
-    DoGauge ("HP: ",   hp_percent,    ColourNameToRGB "darkgreen")
-    DoGauge ("Mana: ", mana_percent,  ColourNameToRGB "mediumblue")
-    DoGauge ("Move: ", move_percent,  ColourNameToRGB "gold")
-
-    WindowShow (stats_win, true)
-
-  end -- draw_bar
-
 
 function build_stats_win()
       --DoGauge ("HP",ingame_prompt["hp"],RED)
+
 end -- function
 
 function LoadAllSprites ()
   local path = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\"
-  local files = {"hp.png","sp.png","ep.png","exp.png","adv.png","cash.png","df.png"}
+  local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","dtime"}
   sprites = {}
   for k, v in pairs (files) do
-    local f = assert (io.open (path .. v, "rb"))  -- open read-only, binary mode
-    sprites[v] = f:read ("*a")  -- read all of it
+    local f = assert (io.open (path .. v .. ".png", "rb"))  -- open read-only, binary mode
+    sprites[v .. "_img"] = f:read ("*a")  -- read all of it
     f:close ()  -- close it
   end --for
 end --function

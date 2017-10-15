@@ -14,6 +14,7 @@ windowWidth = 570
 windowHeight = 300
 TEXT_INSET = 5
 
+
 --colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
 red = RGBColourToName(GetNormalColour(2))
