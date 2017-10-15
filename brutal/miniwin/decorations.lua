@@ -4,15 +4,24 @@ function init_window_decorations()
   SetBackgroundImage(bg_img,6)
 end --function
 
+function LoadAllSprites ()
+  local path = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\"
+  local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","dtime"}
+  for k, v in pairs (files) do
+    local f = assert (io.open (path .. v .. ".png", "rb"))  -- open read-only, binary mode
+    sprites[v .. "_img"] = f:read ("*a")  -- read all of it
+    f:close ()  -- close it
+  end --for
+end --function
+
 function init_stats_win()
   -- get the font information they may have saved last time
-  fontSize = miniwindow_font_size or 8
-  fontName = miniwindow_font or GetInfo(23)
-
-  windowTextColour = WHITE
-  windowBackgroundColour = BLACK
-  windowTitleTextColour = BRIGHTWHITE
-  windowTitleBackgroundColour = BRIGHTBLACK
+  local fontSize = miniwindow_font_size or 8
+  local fontName = miniwindow_font or GetInfo(23)
+  local windowTextColour = WHITE
+  local windowBackgroundColour = BLACK
+  local windowTitleTextColour = BRIGHTWHITE
+  local windowTitleBackgroundColour = BRIGHTBLACK
 
   WINDOW_POSITION = miniwin.pos_bottom_right
   if not whoami then
@@ -22,23 +31,17 @@ function init_stats_win()
   end
   title = player_name .. "'s Game Status"
 
-  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
-  sprite_width =  WindowImageInfo(stats_win, "hp.png", 2) or 34
-  sprite_height = WindowImageInfo(stats_win, "hp.png", 3) or 34
 
-  LoadAllSprites()
-  for k, v in pairs (sprites) do
-    WindowLoadImageMemory (stats_win, k, sprites[k],false) -- load image from memory
-  end --for
-  -- make the window
+  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
+  -- create window
   WindowCreate (stats_win,  windowinfo.window_left,
                       windowinfo.window_top,
                       windowWidth,
                       sprite_height * 7,
                       windowinfo.window_mode,
-                      4,
+                      windowinfo.window_flags,
                       --windowinfo.window_flags,
-                      windowBackgroundColour)  -- create window
+                      windowBackgroundColour)
 
   -- grab a font
   WindowFont (stats_win, font_normal, fontName, fontSize) -- define font
@@ -51,33 +54,17 @@ function init_stats_win()
   -- useable area for text
   windowClientHeight = windowHeight - titleBoxHeight
 
-  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
+  --movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
   WindowRectOp (stats_win, miniwin.rect_fill, 0, 0, 0, titleBoxHeight, windowTitleBackgroundColour)
   WindowText (stats_win, font_normal, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
   WindowRectOp (stats_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
-
-
-  WindowDrawImage (stats_win, "hp_img", TEXT_INSET, titleBoxHeight + TEXT_INSET, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "sp_img", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 1, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "ep_img", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 2, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "exp_img", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "adv_img", TEXT_INSET * 60, titleBoxHeight + TEXT_INSET + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "cash_img", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "df_img", TEXT_INSET * 60, titleBoxHeight + TEXT_INSET + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  --WindowDrawImage (stats_win, "dtime_img", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  --WindowDrawImage (stats_win, "dtime_img", TEXT_INSET * 60, titleBoxHeight + TEXT_INSET + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
-
-  WindowText (stats_win, font_normal, "HP   :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "SP   :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "EP   :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "EXP  :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "ADV   :", (2 * TEXT_INSET * 31 + sprite_width) , (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "CASH :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "DF    :", (2 * TEXT_INSET * 31 + sprite_width) , (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "TIME :", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, font_normal, "PHASE :", (2 * TEXT_INSET * 31 + sprite_width) , (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  --check (WindowRectOp (stats_win, 1, 0, 0, 0, 0, ColourNameToRGB ("lightgrey")))
-
+  check (WindowRectOp (stats_win, 1, 0, 0, 0, 0, ColourNameToRGB ("lightgrey")))
+  --movewindow.save_state(stats_win)
+  for k, v in pairs (sprites) do
+    WindowLoadImageMemory (stats_win, k, sprites[k],false) -- load image from memory
+  end --for
+  -- make the window
+  --WindowShow (stats_win, true)
 end --function
 
 function init_comms_win()
