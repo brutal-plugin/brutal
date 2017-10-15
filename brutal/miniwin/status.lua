@@ -1,83 +1,101 @@
-function init_stats_win()
 
-  -- get the font information they may have saved last time
-  fontSize = miniwindow_font_size or 8
-  fontName = miniwindow_font or GetInfo(23)
+  function DoGauge (sPrompt, Percent, Colour)
+    GAUGE_LEFT = 55
+    GAUGE_HEIGHT = 15
 
-  windowTextColour = WHITE
-  windowBackgroundColour = BLACK
-  windowTitleTextColour = BRIGHTWHITE
-  windowTitleBackgroundColour = BRIGHTBLACK
+    WINDOW_WIDTH = 200
+    WINDOW_HEIGHT = 65
+    NUMBER_OF_TICKS = 5
+    BACKGROUND_COLOUR = ColourNameToRGB "rosybrown"
+    FONT_COLOUR = ColourNameToRGB "darkred"
+    BORDER_COLOUR = ColourNameToRGB "#553333"
+    vertical = 10
+    font_height = WindowFontInfo (stats_win, font_normal, 1)
 
-  FONT_ID = font_normal
-  WINDOW_POSITION = miniwin.pos_bottom_right
-  if not whoami then
-    player_name =  "Player"
-  else
-    player_name = whoami
-  end
-  title = player_name .. "'s Game Status"
 
-  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
+    local Fraction = tonumber (Percent) / 100
 
-  -- make the window
-  WindowCreate (stats_win,  windowinfo.window_left,
-                      windowinfo.window_top,
-                      windowWidth,
-                      windowHeight,
-                      windowinfo.window_mode,
-                      windowinfo.window_flags,
-                      windowBackgroundColour)  -- create window
+    if Fraction > 1 then Fraction = 1 end
+    if Fraction < 0 then Fraction = 0 end
 
-  -- grab a font
-  WindowFont (stats_win, FONT_ID, fontName, fontSize) -- define font
+    local width = WindowTextWidth (stats_win, font_normal, sPrompt)
 
-  -- work out how high it is
-  fontHeight = WindowFontInfo (stats_win, FONT_ID, 1)   -- height of the font
+    WindowText (stats_win, font_normal, sPrompt,
+                               GAUGE_LEFT - width, vertical, 0, 0, FONT_COLOUR)
 
-  -- how big the title box is
-  titleBoxHeight = fontHeight + TEXT_INSET * 2
-  -- useable area for text
-  windowClientHeight = windowHeight - titleBoxHeight
+    WindowRectOp (stats_win, 2, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
+                            BACKGROUND_COLOUR)  -- fill entire box
 
-  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
-  WindowRectOp (stats_win, miniwin.rect_fill, 0, 0, 0, titleBoxHeight, windowTitleBackgroundColour)
-  WindowText (stats_win, FONT_ID, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowRectOp (stats_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
 
-  sprite_width =  WindowImageInfo(stats_win, "hp.png", 2)
-  sprite_height = WindowImageInfo(stats_win, "hp.png", 3)
+    local gauge_width = (WINDOW_WIDTH - GAUGE_LEFT - 5) * Fraction
 
-  LoadAllSprites()
-  for k, v in pairs (sprites) do
-    WindowLoadImageMemory (stats_win, k, sprites[k]) -- load image from memory
-    -- sprite_width or math.max (gauge_left,  WindowTextWidth (win, font_id, "Mana: "))
+     -- box size must be > 0 or WindowGradient fills the whole thing
+    if math.floor (gauge_width) > 0 then
 
-  end --for
+      -- top half
+      WindowGradient (stats_win, GAUGE_LEFT, vertical, GAUGE_LEFT + gauge_width, vertical + GAUGE_HEIGHT / 2,
+                      0x000000,
+                      Colour, 2)
 
-  WindowCircleOp (stats_win, miniwin.circle_ellipse, -- circle
-                  (TEXT_INSET+ TEXT_INSET), (titleBoxHeight+ TEXT_INSET), 4*(TEXT_INSET+ TEXT_INSET),4*(titleBoxHeight+ TEXT_INSET),                -- Left, Top, Right, Bottom
-                  BLUE, miniwin.pen_solid, 2, -- pen width 2
-                  BACKGROUND, miniwin.brush_null)  -- brush
---[[
-  print (sprite_width, sprite_height)
-  WindowDrawImage (stats_win, "hp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET, 0, 0, miniwin.image_copy)  -- draw it
-  WindowDrawImage (stats_win, "sp.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 1, 0, 0, miniwin.image_copy)  -- draw it
-  WindowDrawImage (stats_win, "ep.png", TEXT_INSET, titleBoxHeight + TEXT_INSET + sprite_height * 2, 0, 0, miniwin.image_copy)  -- draw it
+      -- bottom half
+      WindowGradient (stats_win, GAUGE_LEFT, vertical + GAUGE_HEIGHT / 2,
+                      GAUGE_LEFT + gauge_width, vertical +  GAUGE_HEIGHT,
+                      Colour,
+                      0x000000,
+                      2)
 
-  WindowText (stats_win, FONT_ID, "HP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, FONT_ID, "SP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowText (stats_win, FONT_ID, "EP", (2 * TEXT_INSET + sprite_width) , (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-]]--
-end --function
+    end -- non-zero
+
+    -- show ticks
+    local ticks_at = (WINDOW_WIDTH - GAUGE_LEFT - 5) / (NUMBER_OF_TICKS + 1)
+
+    -- ticks
+    for i = 1, NUMBER_OF_TICKS do
+      WindowLine (stats_win, GAUGE_LEFT + (i * ticks_at), vertical,
+                  GAUGE_LEFT + (i * ticks_at), vertical + GAUGE_HEIGHT, ColourNameToRGB ("silver"), 0, 1)
+    end -- for
+
+    -- draw a box around it
+    check (WindowRectOp (stats_win, 1, GAUGE_LEFT, vertical, WINDOW_WIDTH - 5, vertical + GAUGE_HEIGHT,
+            ColourNameToRGB ("lightgrey")))  -- frame entire box
+
+    vertical = vertical + font_height + 3
+  end -- function
+
+  function do_prompt (name, line, wildcards)
+
+    local hp, max_hp = tonumber (wildcards [1]), tonumber (wildcards [2])
+    local mana, max_mana = tonumber (wildcards [3]), tonumber (wildcards [4])
+    local move, max_move = tonumber (wildcards [5]), tonumber (wildcards [6])
+
+    local hp_percent = hp / max_hp
+    local mana_percent = mana / max_mana
+    local move_percent = move / max_move
+
+    -- fill entire box to clear it
+    check (WindowRectOp (stats_win, 2, 0, 0, 0, 0, BACKGROUND_COLOUR))  -- fill entire box
+
+    -- Edge around box rectangle
+    check (WindowCircleOp (stats_win, 3, 0, 0, 0, 0, BORDER_COLOUR, 0, 2, 0, 1))
+
+    vertical = 6  -- pixel to start at
+
+    DoGauge ("HP: ",   hp_percent,    ColourNameToRGB "darkgreen")
+    DoGauge ("Mana: ", mana_percent,  ColourNameToRGB "mediumblue")
+    DoGauge ("Move: ", move_percent,  ColourNameToRGB "gold")
+
+    WindowShow (stats_win, true)
+
+  end -- draw_bar
+
 
 function build_stats_win()
-
+      --DoGauge ("HP",ingame_prompt["hp"],RED)
 end -- function
 
 function LoadAllSprites ()
   local path = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\"
-  local files = {"hp.png","sp.png","ep.png"}
+  local files = {"hp.png","sp.png","ep.png","exp.png","adv.png","cash.png","df.png"}
   sprites = {}
   for k, v in pairs (files) do
     local f = assert (io.open (path .. v, "rb"))  -- open read-only, binary mode
