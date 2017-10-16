@@ -1,11 +1,34 @@
 function init_window_decorations()
-  TextRectangle(0, 0, GetInfo (213) * 148, 0, 5, BACKGROUND, 2, FOREGROUND, 8)
-  local bg_img = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\bg_img.png"
-  SetBackgroundImage(bg_img,6)
+  --TextRectangle(0, 0, GetInfo (213) * 148, 0, 5, BACKGROUND, 2, FOREGROUND, 8)
+  if brutal_theme_enabled then
+    SetNormalColour (1,ColourNameToRGB("black"))
+    SetNormalColour (2,ColourNameToRGB("crimson"))
+    SetNormalColour (3,ColourNameToRGB("forestgreen"))
+    SetNormalColour (4,ColourNameToRGB("chocolate"))
+    SetNormalColour (5,ColourNameToRGB("dodgerblue"))
+    SetNormalColour (6,ColourNameToRGB("magenta"))
+    SetNormalColour (7,ColourNameToRGB("cadetblue"))
+    SetNormalColour (8,ColourNameToRGB("lightgrey"))
+    SetBoldColour (1,ColourNameToRGB("gray"))
+    SetBoldColour (2,ColourNameToRGB("red"))
+    SetBoldColour (3,ColourNameToRGB("chartreuse"))
+    SetBoldColour (4,ColourNameToRGB("yellow"))
+    SetBoldColour (5,ColourNameToRGB("mediumblue"))
+    SetBoldColour (6,ColourNameToRGB("mediumvioletred"))
+    SetBoldColour (7,ColourNameToRGB("teal"))
+    SetBoldColour (8,ColourNameToRGB("white"))
+    local bg_img = GetInfo(60) .. "brutal\\brutal\\theme\\bg_img.png"
+    AddFont(GetInfo(60) .. "brutal\\brutal\\theme\\Inconsolata-Regular.ttf")
+    SetOutputFont ("Inconsolata", 10)
+    SetInputFont ("Inconsolata", 10)
+
+    SetBackgroundImage(bg_img,6)
+    Redraw()
+  end --if
 end --function
 
 function LoadAllSprites ()
-  local path = GetInfo(60) .. "brutal-plugin\\brutal\\sprites\\"
+  local path = GetInfo(60) .. "brutal\\brutal\\sprites\\"
   local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","dtime"}
   for k, v in pairs (files) do
     local f = assert (io.open (path .. v .. ".png", "rb"))  -- open read-only, binary mode

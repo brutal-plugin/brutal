@@ -14,8 +14,8 @@ windowWidth = 570
 windowHeight = 300
 TEXT_INSET = 5
 sprites = {}
-sprite_width = 34
-sprite_height = 34
+sprite_width = 32
+sprite_height = 32
 
 
 --colours extracted from mushclient under game -> configure -> ansi colours

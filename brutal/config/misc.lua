@@ -22,6 +22,7 @@ function OnPluginInstall()
   EnableTriggerGroup ("reset_status",false)
   EnableTriggerGroup ("brutal_comms_group",false)
   setup_gags()
+  init_window_decorations()
   init_stats_win()
   init_comms_win()
   if GetOption("enable_speed_walk") == 1 then

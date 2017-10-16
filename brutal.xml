@@ -23,9 +23,7 @@
 <script>
   -- package config path
   local plugin_path
-  plugin_path = GetInfo(60) .. "brutal-plugin\\brutal\\?.lua"
-  package.path = package.path .. ";" .. plugin_path
-  plugin_path = GetInfo(60) .. "brutal-master\\brutal\\?.lua"
+  plugin_path = GetInfo(60) .. "\\brutal\\brutal\\?.lua"
   package.path = package.path .. ";" .. plugin_path
 
 
