@@ -24,13 +24,6 @@ function init_stats_win()
   local windowTitleBackgroundColour = BRIGHTBLACK
 
   WINDOW_POSITION = miniwin.pos_bottom_right
-  if not whoami then
-    player_name =  "Player"
-  else
-    player_name = whoami
-  end
-  title = player_name .. "'s Game Status"
-
 
   windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
   -- create window
@@ -39,8 +32,7 @@ function init_stats_win()
                       windowWidth,
                       sprite_height * 7,
                       windowinfo.window_mode,
-                      windowinfo.window_flags,
-                      --windowinfo.window_flags,
+                      20,
                       windowBackgroundColour)
 
   -- grab a font
@@ -54,17 +46,17 @@ function init_stats_win()
   -- useable area for text
   windowClientHeight = windowHeight - titleBoxHeight
 
-  --movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
-  WindowRectOp (stats_win, miniwin.rect_fill, 0, 0, 0, titleBoxHeight, windowTitleBackgroundColour)
-  WindowText (stats_win, font_normal, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-  WindowRectOp (stats_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
-  check (WindowRectOp (stats_win, 1, 0, 0, 0, 0, ColourNameToRGB ("lightgrey")))
-  --movewindow.save_state(stats_win)
+  if not whoami then
+    title =  "Player" .. "'s Game Status"
+  else
+    title = whoami .. "'s Game Status"
+  end
+
+  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
   for k, v in pairs (sprites) do
     WindowLoadImageMemory (stats_win, k, sprites[k],false) -- load image from memory
   end --for
-  -- make the window
-  --WindowShow (stats_win, true)
+  fill_stats_win()
 end --function
 
 function init_comms_win()
@@ -87,7 +79,7 @@ function init_comms_win()
                         windowWidth,
                         windowHeight,
                         windowinfo.window_mode,
-                        7,
+                        4,
                         --windowinfo.window_flags,
                         windowBackgroundColour)  -- create window
 
