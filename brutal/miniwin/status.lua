@@ -49,6 +49,7 @@ function build_stats_win()
       --reinitilize the window with static items
       fill_stats_win()
       local sprite_width = 25
+      --add the status for busy/casting
       WindowText (stats_win, font_normal, string.upper(ingame_prompt["st"]), (sprite_width * 6) , (TEXT_INSET), windowWidth - TEXT_INSET, 0, BRIGHTRED)
 
       --grab hp/ep/sp values from ingame_prompt
@@ -75,8 +76,7 @@ function build_stats_win()
       draw_stat_guages(TEXT_INSET + sprite_height * 2, sp, BLUE)
       draw_stat_guages(TEXT_INSET + sprite_height * 3, ep, GREEN)
 
-      --determine strike/normal if hp/ep/sp were updates and draw them
-
+      --draw the true/max hp/ep/sp values with strike or normal font
       myHP = "[" .. truehp .. "/" .. maxhp .. "]"
       mySP = "[" .. truesp .. "/" .. maxsp .. "]"
       myEP = "[" .. trueep .. "/" .. maxep .. "]"
