@@ -1,5 +1,10 @@
 function init_window_decorations()
   --TextRectangle(0, 0, GetInfo (213) * 148, 0, 5, BACKGROUND, 2, FOREGROUND, 8)
+  if brutal_output_font == "Inconsolata" or
+    infobar_font  == "Inconsolata" or
+    miniwindow_font  == "Inconsolata" then
+    AddFont(brutal_path .. "theme\\Inconsolata-Regular.ttf")
+  end --if
   if brutal_theme_enabled then
     SetNormalColour (1,ColourNameToRGB("black"))
     SetNormalColour (2,ColourNameToRGB("crimson"))
@@ -18,12 +23,8 @@ function init_window_decorations()
     SetBoldColour (7,ColourNameToRGB("teal"))
     SetBoldColour (8,ColourNameToRGB("white"))
     local bg_img = brutal_path .. "theme\\bg_img.png"
-    if brutal_output_font == "Inconsolata" then
-      AddFont(brutal_path .. "theme\\Inconsolata-Regular.ttf")
-    end --if
     SetOutputFont (brutal_output_font, brutal_output_font_size)
     SetInputFont(brutal_output_font, brutal_output_font_size, 0, 0)
-
     SetBackgroundImage(bg_img,6)
     Redraw()
   end --if
