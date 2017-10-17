@@ -45,12 +45,20 @@ And when there is some action
 * setup a chat mini floating window
 * setup a party mini floating window
 
-## **credits**
+## **#credits**
 icons have been provided from:
+
 https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg
 
 deathwing backdrop image has been modified, original source from:
+
 http://wallpaperswide.com/deathwing-wallpapers.html
 
 inconsalata font has been gotten from
+
 https://www.fontsquirrel.com/fonts/inconsolata
+
+some code has been written from scratch, and others modifed from examples on the mushclient forums:
+
+https://www.gammon.com.au/scripts/forum.php
+https://www.gammon.com.au/mushclient/mushclient.htm
