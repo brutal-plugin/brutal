@@ -19,6 +19,9 @@ function capture_prompt(name,line,wildcards,styles)
   track_update["hp"] = false
   track_update["sp"] = false
   track_update["ep"] = false
+  track_update["hpFont"] = font_normal
+  track_update["spFont"] = font_normal
+  track_update["epFont"] = font_normal
   --build the infobar
   build_infobar()
   build_stats_win()

@@ -22,10 +22,18 @@
 <include name="constants.lua"/>
 <script>
   -- package config path
-  local plugin_path
-  plugin_path = GetInfo(60) .. "\\brutal\\brutal\\?.lua"
+  plugin_path = ""
+  brutal_path = ""
+  check_path = io.open(GetInfo(60) .. "\\brutal\\brutal\\brutal.lua",r)
+  if check_path then
+    io.close(check_path)
+    plugin_path = GetInfo(60) .. "\\brutal\\brutal\\?.lua"
+    brutal_path = GetInfo(60) .. "\\brutal\\brutal\\"
+  else
+    plugin_path = GetInfo(60) .. "\\brutal-master\\brutal\\?.lua"
+    brutal_path = GetInfo(60) .. "\\brutal-master\\brutal\\"
+  end
   package.path = package.path .. ";" .. plugin_path
-
 
   --load main config file
   require "brutal"

@@ -17,10 +17,12 @@ function init_window_decorations()
     SetBoldColour (6,ColourNameToRGB("mediumvioletred"))
     SetBoldColour (7,ColourNameToRGB("teal"))
     SetBoldColour (8,ColourNameToRGB("white"))
-    local bg_img = GetInfo(60) .. "brutal\\brutal\\theme\\bg_img.png"
-    AddFont(GetInfo(60) .. "brutal\\brutal\\theme\\Inconsolata-Regular.ttf")
-    SetOutputFont ("Inconsolata", 10)
-    SetInputFont ("Inconsolata", 10)
+    local bg_img = brutal_path .. "theme\\bg_img.png"
+    if brutal_output_font == "Inconsolata" then
+      AddFont(brutal_path .. "theme\\Inconsolata-Regular.ttf")
+    end --if
+    SetOutputFont (brutal_output_font, brutal_output_font_size)
+    SetInputFont(brutal_output_font, brutal_output_font_size, 0, 0)
 
     SetBackgroundImage(bg_img,6)
     Redraw()
@@ -28,7 +30,7 @@ function init_window_decorations()
 end --function
 
 function LoadAllSprites ()
-  local path = GetInfo(60) .. "brutal\\brutal\\sprites\\"
+  local path = brutal_path .. "sprites\\"
   local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","dtime"}
   for k, v in pairs (files) do
     local f = assert (io.open (path .. v .. ".png", "rb"))  -- open read-only, binary mode
@@ -53,13 +55,14 @@ function init_stats_win()
   WindowCreate (stats_win,  windowinfo.window_left,
                       windowinfo.window_top,
                       windowWidth,
-                      sprite_height * 7,
+                      sprite_height * 7 + TEXT_INSET,
                       windowinfo.window_mode,
                       20,
                       windowBackgroundColour)
 
   -- grab a font
-  WindowFont (stats_win, font_normal, fontName, fontSize) -- define font
+  WindowFont (stats_win, font_normal, fontName, fontSize) -- define font for normal
+  WindowFont (stats_win, font_strike, fontName, fontSize, false, false, false, true) -- define font for strike
 
   -- work out how high it is
   fontHeight = WindowFontInfo (stats_win, font_normal, 1)   -- height of the font
