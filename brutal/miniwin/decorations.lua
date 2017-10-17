@@ -88,14 +88,14 @@ end --function
 
 function init_comms_win()
     -- get the font information they may have saved last time
-    fontSize = miniwindow_font_size or 8
-    fontName = miniwindow_font or GetInfo(23)
+    local fontSize = miniwindow_font_size or 8
+    local fontName = miniwindow_font or GetInfo(23)
+    local windowTextColour = WHITE
+    local windowBackgroundColour = BLACK
+    local windowTitleTextColour = BRIGHTWHITE
+    local windowTitleBackgroundColour = BRIGHTBLACK
 
-    windowTextColour = WHITE
-    windowBackgroundColour = BLACK
-    windowTitleTextColour = BRIGHTWHITE
-    windowTitleBackgroundColour = BRIGHTBLACK
-    WINDOW_POSITION = miniwin.pos_center_right
+    WINDOW_POSITION = miniwin.pos_top_right
     title = "Communications Channel"
 
     windowinfo = movewindow.install (comms_win, WINDOW_POSITION, 0)  -- default position / flags

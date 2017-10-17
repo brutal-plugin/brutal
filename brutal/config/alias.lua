@@ -71,14 +71,17 @@ function so_whoami()
 end --function
 
 function switch_triggers(args)
-  EnableTriggerGroup ("brutal_prompt_group",args)
-  EnableTriggerGroup ("reset_status",args)
-  EnableTriggerGroup ("brutal_comms_group",args)
+
   LoadAllSprites()
   init_window_decorations()
+  EnableTriggerGroup ("brutal_prompt_group",args)
+  EnableTriggerGroup ("reset_status",args)
   WindowShow (decor_win, args)
   init_stats_win()
   WindowShow (stats_win, args)
-  init_comms_win()
-  --WindowShow (comms_win, args)
+  if comms_win_enabled == true then
+    init_comms_win()
+    EnableTriggerGroup ("brutal_comms_group",args)
+    WindowShow (comms_win, args)
+  end --if
 end

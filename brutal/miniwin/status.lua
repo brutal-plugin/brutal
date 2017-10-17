@@ -48,6 +48,7 @@ end --function
 function build_stats_win()
       --reinitilize the window with static items
       fill_stats_win()
+      local windowTitleTextColour = BRIGHTWHITE
       local sprite_width = 25
       --add the status for busy/casting
       WindowText (stats_win, font_normal, string.upper(ingame_prompt["st"]), (sprite_width * 6) , (TEXT_INSET), windowWidth - TEXT_INSET, 0, BRIGHTRED)
