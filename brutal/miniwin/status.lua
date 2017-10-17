@@ -49,6 +49,7 @@ function build_stats_win()
       --reinitilize the window with static items
       fill_stats_win()
       local sprite_width = 25
+      WindowText (stats_win, font_normal, string.upper(ingame_prompt["st"]), (sprite_width * 6) , (TEXT_INSET), windowWidth - TEXT_INSET, 0, BRIGHTRED)
 
       --grab hp/ep/sp values from ingame_prompt
       local hp = string.format("%3s",ingame_prompt["hp"])
