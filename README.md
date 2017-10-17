@@ -8,18 +8,21 @@ I recommend to creating a new world in mushclient before installing. This plugin
 
 ## **#screenshots**
 This plugin will dynamically capture your prompt and display it on the infobar:
-![ALt text](brutal/screenshots/screenshot-01.png)
+![ALt text](brutal/screenshots/infobar_scr.png)
 
 Additional information will be captured and displayed in a floating mini window:
-![ALt text](brutal/screenshots/screenshot-02.png)
+![ALt text](brutal/screenshots/miniwin_scr.png)
 
-This is how my muschlient looks like:
-![ALt text](brutal/screenshots/screenshot-main.png)
+This is how my muschlient looks like when im idle:
+![ALt text](brutal/screenshots/scr_fs_idle.png)
+
+And when there is some action
+![ALt text](brutal/screenshots/scr_fs_action.png)
 
 ## **#installing**
 
-* dowload and extract zip file into your '..MUSHCLient\worlds\plugin' folder
-* edit brutal\config\user.lua file (optional)
+* dowload and extract zip file (our use git to clone) into your '..MUSHCLient\worlds\plugin' folder
+* edit brutal\config\user.lua file (optional, font type/size)
 * create new world in mushclient (highly recommeded)
 * connect to icesus.org and login
 * click on file, plugins, and add 'brutal.xml' from the brutal-master folder
@@ -30,7 +33,7 @@ This is how my muschlient looks like:
 * errors may crop up if your internet connection is too laggy
 * every care has been taken not to violate games rules on "help triggers". if you feel a part of my code violates/breaks these rules. please mudmail/tell me immediately.
 * with above point, triggers are set based from input from the prompt. if the prompt is not updated manually (by being unilde) then values may not correspond to real values.
-* you can change some variables by editing brutal\config\user.lua such as font, font size and even install my personal brutal colour scheme.
+* you can change some variables by editing brutal\config\user.lua such as font, font size.
 
 ## **#uninstalling**
 * remove/uninstall plugin from file, plugins
@@ -41,3 +44,13 @@ This is how my muschlient looks like:
 
 * setup a chat mini floating window
 * setup a party mini floating window
+
+## **credits**
+icons have been provided from:
+https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg
+
+deathwing backdrop image has been modified, original source from:
+http://wallpaperswide.com/deathwing-wallpapers.html
+
+inconsalata font has been gotten from
+https://www.fontsquirrel.com/fonts/inconsolata
