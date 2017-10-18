@@ -8,6 +8,9 @@ function healthbar_update(name,line,wildcards)
       end --if
      end --if
   end --for
+  if name == "party_self_bar" then
+    --insert function for party
+  end --f
   build_infobar()
   build_stats_win()
 end --function
@@ -35,8 +38,8 @@ function  fully_magical()
   ingame_prompt["bar_sp_lite"] = brightblack
   track_update["source"] = "update"
   track_update["sp"] = true
-  build_stats_win()
   build_infobar()
+  build_stats_win()
 end --function
 
 function fully_rested()

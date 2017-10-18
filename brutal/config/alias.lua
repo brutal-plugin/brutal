@@ -66,9 +66,16 @@ function so_whoami()
     local player_name = wait.match("You are *.",1)
     if player_name then
       whoami = string.match (player_name,"^You are (.+)\.$")
+      --<party>: Wazimu >> HP:[#######] 100% SP:[#######] 100% EP:[###### ]  99%
+      local my_party_guages = "^\\\<party\\\>: ".. whoami .." \\\>\\\> HP:\\\[.......\\\].(?<hp>.+)% SP:\\\[.......\\\] (?<sp>.+)% EP:\\\[.......\\\] (?<ep>.+)%$"
+      AddTrigger("party_self_bar", my_party_guages, "", 41 , -1, 0, "", "healthbar_update")
     end --if
   end --if
 end --function
+
+function helo()
+  print("hello")
+end
 
 function switch_triggers(args)
 

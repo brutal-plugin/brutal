@@ -34,4 +34,5 @@ gag_ingame_prompt = true
 -- gag ingame hp/sp/ep health bars
 gag_color_bar = true
 
+--enable communications floating window (still in development, set it to false.)
 comms_win_enabled = false
