@@ -16,7 +16,10 @@ TEXT_INSET = 5
 sprites = {}
 sprite_width = 32
 sprite_height = 32
-
+SCROLL_BAR_SIZE = 5
+SCROLL_THUMB_HOTSPOT = "thumb"
+SCROLL_WHEEL_HOTSPOT = "ScrollWheelHotspot"
+brutal_comms = {}
 
 --colours extracted from mushclient under game -> configure -> ansi colours
 black = RGBColourToName(GetNormalColour(1))
@@ -56,3 +59,23 @@ BRIGHTCYAN = ColourNameToRGB (brightcyan)
 BRIGHTWHITE = ColourNameToRGB (brightwhite)
 FOREGROUND = BRIGHTWHITE
 BACKGROUND = BRIGHTBLACK
+
+--[[
+--modify mushclient default colours to below, check init_window_decorations() function
+SetNormalColour (1,ColourNameToRGB("black"))
+SetNormalColour (2,ColourNameToRGB("crimson"))
+SetNormalColour (3,ColourNameToRGB("forestgreen"))
+SetNormalColour (4,ColourNameToRGB("chocolate"))
+SetNormalColour (5,ColourNameToRGB("dodgerblue"))
+SetNormalColour (6,ColourNameToRGB("magenta"))
+SetNormalColour (7,ColourNameToRGB("cadetblue"))
+SetNormalColour (8,ColourNameToRGB("lightgrey"))
+SetBoldColour (1,ColourNameToRGB("gray"))
+SetBoldColour (2,ColourNameToRGB("red"))
+SetBoldColour (3,ColourNameToRGB("chartreuse"))
+SetBoldColour (4,ColourNameToRGB("yellow"))
+SetBoldColour (5,ColourNameToRGB("mediumblue"))
+SetBoldColour (6,ColourNameToRGB("mediumvioletred"))
+SetBoldColour (7,ColourNameToRGB("teal"))
+SetBoldColour (8,ColourNameToRGB("white"))
+]]--

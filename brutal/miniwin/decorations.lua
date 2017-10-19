@@ -25,6 +25,17 @@ function init_window_decorations()
     local bg_img = brutal_path .. "theme\\bg_img.png"
     SetOutputFont (brutal_output_font, brutal_output_font_size)
     SetInputFont(brutal_output_font, brutal_output_font_size, 0, 0)
+    SetCommandWindowHeight(4 * TEXT_INSET + brutal_output_font_size )
+    SetOption("input_background_colour", input_background_colour)
+    SetOption("input_text_colour", input_text_colour)
+    SetOption("confirm_before_replacing_typing", confirm_before_replacing_typing)
+    SetOption("F1macro", F1macro)
+    SetOption("ErrorNotificationToOutputWindow", ErrorNotificationToOutputWindow)
+    SetOption("max_output_lines", max_output_lines)
+    SetOption("wrap_column", wrap_column)
+    --GetInfo(257) -- Info bar window height (long)
+    --GetInfo(258) -- Info bar window width (long)
+    --GetDeviceCaps(8) -- Horizontal width in pixels
     SetBackgroundImage(bg_img,6)
     Redraw()
   end --if
@@ -38,90 +49,4 @@ function LoadAllSprites ()
     sprites[v .. "_img"] = f:read ("*a")  -- read all of it
     f:close ()  -- close it
   end --for
-end --function
-
-function init_stats_win()
-  -- get the font information they may have saved last time
-  local fontSize = miniwindow_font_size or 8
-  local fontName = miniwindow_font or GetInfo(23)
-  local windowTextColour = WHITE
-  local windowBackgroundColour = BLACK
-  local windowTitleTextColour = BRIGHTWHITE
-  local windowTitleBackgroundColour = BRIGHTBLACK
-
-  WINDOW_POSITION = miniwin.pos_bottom_right
-
-  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
-  -- create window
-  WindowCreate (stats_win,  windowinfo.window_left,
-                      windowinfo.window_top,
-                      windowWidth,
-                      sprite_height * 7 + TEXT_INSET,
-                      windowinfo.window_mode,
-                      20,
-                      windowBackgroundColour)
-
-  -- grab a font
-  WindowFont (stats_win, font_normal, fontName, fontSize) -- define font for normal
-  WindowFont (stats_win, font_strike, fontName, fontSize, false, false, false, true) -- define font for strike
-
-  -- work out how high it is
-  fontHeight = WindowFontInfo (stats_win, font_normal, 1)   -- height of the font
-
-  -- how big the title box is
-  titleBoxHeight = fontHeight + TEXT_INSET * 2
-  -- useable area for text
-  windowClientHeight = windowHeight - titleBoxHeight
-
-  if not whoami then
-    title =  "Player" .. "'s Game Status"
-  else
-    title = whoami .. "'s Game Status"
-  end
-
-  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
-  for k, v in pairs (sprites) do
-    WindowLoadImageMemory (stats_win, k, sprites[k],false) -- load image from memory
-  end --for
-  fill_stats_win()
-end --function
-
-function init_comms_win()
-    -- get the font information they may have saved last time
-    local fontSize = miniwindow_font_size or 8
-    local fontName = miniwindow_font or GetInfo(23)
-    local windowTextColour = WHITE
-    local windowBackgroundColour = BLACK
-    local windowTitleTextColour = BRIGHTWHITE
-    local windowTitleBackgroundColour = BRIGHTBLACK
-
-    WINDOW_POSITION = miniwin.pos_top_right
-    title = "Communications Channel"
-
-    windowinfo = movewindow.install (comms_win, WINDOW_POSITION, 0)  -- default position / flags
-
-    -- make the window
-    WindowCreate (comms_win,  windowinfo.window_left,
-                        windowinfo.window_top,
-                        windowWidth,
-                        windowHeight,
-                        windowinfo.window_mode,
-                        4,
-                        --windowinfo.window_flags,
-                        windowBackgroundColour)  -- create window
-
-    -- grab a font
-    WindowFont (comms_win, font_normal, fontName, fontSize) -- define font
-
-    -- work out how high it is
-    fontHeight = WindowFontInfo (comms_win, font_normal, 1)   -- height of the font
-    -- how big the title box is
-    titleBoxHeight = fontHeight + TEXT_INSET * 2
-    -- useable area for text
-    windowClientHeight = windowHeight - titleBoxHeight
-
-    movewindow.add_drag_handler (comms_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
-    WindowRectOp (comms_win, miniwin.rect_fill, 0, 0, 0, titleBoxHeight, windowTitleBackgroundColour)
-    WindowText (comms_win, font_normal, title, TEXT_INSET, TEXT_INSET, windowWidth - TEXT_INSET, 0, windowTitleTextColour)
-    WindowRectOp (comms_win, 1, 0, 0, windowWidth, windowHeight, BRIGHTWHITE)
 end --function

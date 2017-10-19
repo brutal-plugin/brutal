@@ -46,7 +46,7 @@ And when there is some action
 * setup a party mini floating window
 
 ## **#credits**
-icons have been provided from:
+thanks to Henrique Lazarini for icons and sprites:
 
 https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg
 
@@ -54,11 +54,13 @@ deathwing backdrop image has been modified, original source from:
 
 http://wallpaperswide.com/deathwing-wallpapers.html
 
-inconsalata font has been gotten from
+thanks to the creators of the font inconsolata, i sourced from:
 
-https://www.fontsquirrel.com/fonts/inconsolata
+https://fonts.google.com/specimen/Inconsolata
 
-some code has been written from scratch, and others modifed from examples on the mushclient forums:
+most code has been written from scratch, using templates and examples from the muschlient forums.
+Many thanks to the all the devs there.
 
-https://www.gammon.com.au/scripts/forum.php
-https://www.gammon.com.au/mushclient/mushclient.htm
+http://mushclient.com/mushclient/mushclient.htm
+
+http://mushclient.com/functions

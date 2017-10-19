@@ -1,3 +1,48 @@
+function init_stats_win()
+  -- get the font information they may have saved last time
+  local fontSize = miniwindow_font_size or 8
+  local fontName = miniwindow_font or GetInfo(23)
+  local windowTextColour = WHITE
+  local windowBackgroundColour = BLACK
+  local windowTitleTextColour = BRIGHTWHITE
+  local windowTitleBackgroundColour = BRIGHTBLACK
+
+  WINDOW_POSITION = miniwin.pos_bottom_right
+
+  windowinfo = movewindow.install (stats_win, WINDOW_POSITION, 0)  -- default position / flags
+  -- create window
+  WindowCreate (stats_win,  windowinfo.window_left,
+                      windowinfo.window_top,
+                      windowWidth,
+                      sprite_height * 7 + TEXT_INSET,
+                      windowinfo.window_mode,
+                      20,
+                      windowBackgroundColour)
+
+  -- grab a font
+  WindowFont (stats_win, font_normal, fontName, fontSize) -- define font for normal
+  WindowFont (stats_win, font_strike, fontName, fontSize, false, false, false, true) -- define font for strike
+
+  -- work out how high it is
+  fontHeight = WindowFontInfo (stats_win, font_normal, 1)   -- height of the font
+
+  -- how big the title box is
+  titleBoxHeight = fontHeight + TEXT_INSET * 2
+  -- useable area for text
+  windowClientHeight = windowHeight - titleBoxHeight
+
+  if not whoami then
+    title =  "Player" .. "'s Game Status"
+  else
+    title = whoami .. "'s Game Status"
+  end
+
+  movewindow.add_drag_handler (stats_win, 0, 0, 0, titleBoxHeight, miniwin.cursor_both_arrow)
+  for k, v in pairs (sprites) do
+    WindowLoadImageMemory (stats_win, k, sprites[k],false) -- load image from memory
+  end --for
+  fill_stats_win()
+end --function
 
 function draw_stat_guages(myPositonY, myValue, myColour)
       GAUGE_LEFT = 120
@@ -94,7 +139,7 @@ function build_stats_win()
       local cash = commas(ingame_prompt["cash"])
       local df = commas(ingame_prompt["df"])
       local my_exp = xp .. "\/" .. exptolvl .. " (" .. protolvl .. ")"
-      local my_adv = exptoadv .. " (" ..protolvl .. ")"
+      local my_adv = exptoadv .. " (" .. protoadv .. ")"
 
       --display them
       WindowText (stats_win, font_normal, my_exp, (sprite_width * 3) , (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, windowTitleTextColour)

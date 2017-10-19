@@ -73,9 +73,6 @@ function so_whoami()
   end --if
 end --function
 
-function helo()
-  print("hello")
-end
 
 function switch_triggers(args)
 
