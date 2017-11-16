@@ -25,7 +25,7 @@ function capture_prompt(name,line,wildcards,styles)
   --build the infobar
   build_infobar()
   build_stats_win()
-end --function
+end --function capture_prompt
 
 function make_bar_colours (mypercent)
   local mypercent = tonumber(mypercent)
@@ -40,9 +40,9 @@ function make_bar_colours (mypercent)
   elseif mypercent < 25 and mypercent >= 0 then
     return (red)
   end --if
-end --if
+end --function make_bar_colours
 
-function  make_lite_colours(mypercent)
+function make_lite_colours(mypercent)
   local mypercent = tonumber(mypercent)
   if mypercent >= 100  then
     return (brightblack)
@@ -57,4 +57,4 @@ function  make_lite_colours(mypercent)
   elseif mypercent < 10 and mypercent >= 0 then
     return (red)
   end --if
-end --function
+end --function make_lite_colours
