@@ -72,10 +72,10 @@ function build_stats_win()
   WindowText (stats_win, body_font, phase, posX_2 , (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
   --draw the health guages
   local posX_3 = posX_1 + WindowTextWidth (stats_win,body_font,"     ") -- five spaces, for x-axis
-  local guage_height = (2 * TEXT_INSET) + WindowFontInfo (stats_win, body_font, 1)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 1, hp, RED)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 2, sp, BLUE)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 3, ep, GREEN)
+  local guage_height = WindowFontInfo (stats_win, body_font, 1)
+  draw_stat_guages(posX_3,guage_height,sprite_height * 1 + TEXT_INSET, hp, RED)
+  draw_stat_guages(posX_3,guage_height,sprite_height * 2 + TEXT_INSET, sp, BLUE)
+  draw_stat_guages(posX_3,guage_height,sprite_height * 3 + TEXT_INSET, ep, GREEN)
   --fill in the health stats
   local truehp = ingame_prompt["truehp"]
   local truesp = ingame_prompt["truesp"]
