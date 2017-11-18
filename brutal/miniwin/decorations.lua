@@ -21,7 +21,7 @@ end --function set_brutal_theme
 
 function LoadAllSprites ()
   local path = brutal_path .. "sprites\\"
-  local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","dtime"}
+  local files = {"hp","sp","ep","exp","adv","cash","df","earth","fire","air","water","magic","day","night","karma","status"}
   for k, v in pairs (files) do
     local f = assert (io.open (path .. v .. ".png", "rb"))  -- open read-only, binary mode
     sprites[v .. "_img"] = f:read ("*a")  -- read all of it

@@ -85,28 +85,29 @@ function setup_brutal_environment(args,source)
     set_brutal_theme()
   end --if
 
+  local left, top, width, height, posY = 0, 0, 0, 0, 0 --declare empty variables for miniwindow
   --init info window if set false
   if use_classic_infobar == false then
     CreateMiniWindow(minfo_win)
-    --long WindowCreate(BSTR WindowName, long Left, long Top, long Width, long Height, short Position, long Flags, long BackgroundColour);
-    local left, top, width, height = 0, (GetInfo(280) - sprite_height), GetDeviceCaps(8) * 0.729, GetDeviceCaps(10) * 0.035
+    left, top, width, height = 0, (GetInfo(280) - sprite_height), GetInfo(281) * 0.72,  GetInfo(280) * 0.035
     ResizeAndAddBorder(minfo_win, left, top, width, height)
-    --long TextRectangle(long Left, long Top, long Right, long Bottom, long BorderOffset, long BorderColour, long BorderWidth, long OutsideFillColour, long OutsideFillStyle);
-    TextRectangle(0, 0,GetDeviceCaps(8) * 0.725, 0 - sprite_height, 0, BACKGROUND, 0, FOREGROUND, 8)
-    WindowShow (minfo_win, args)
+    TextRectangle(0, 0,GetInfo(281) * 0.72, 0 - sprite_height, 0, BACKGROUND, 0, FOREGROUND, 8)
+    WindowShow (minfo_win, true)
     ShowInfoBar (use_classic_infobar)
   else
     WindowShow (minfo_win, false)
-    --long TextRectangle(long Left, long Top, long Right, long Bottom, long BorderOffset, long BorderColour, long BorderWidth, long OutsideFillColour, long OutsideFillStyle);
-    TextRectangle(0, 0,GetDeviceCaps(8) * 0.725, 0 , 0, BACKGROUND, 0, FOREGROUND, 8)
+    TextRectangle(0, 0,GetInfo(281) * 0.72, 0 , 0, BACKGROUND, 0, FOREGROUND, 8)
   end
 
   --init communications window if set true
   if comms_win_enabled == true then
-    --long WindowCreate(BSTR WindowName, long Left, long Top, long Width, long Height, short Position, long Flags, long BackgroundColour);
     CreateMiniWindow(comms_win)
-    local left, top, width, height = GetDeviceCaps(8) * 0.729, 0, GetDeviceCaps(8) * 0.26, GetDeviceCaps(10) * 0.225
+    left = GetInfo(281) * 0.72 --x-axis
+    top = posY --y-axis
+    width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
+    height = (WindowFontInfo (comms_win, title_font, 1)) + (2 * TEXT_INSET) + (16 * WindowFontInfo (comms_win, body_font, 1)) --height of miniwindow
     ResizeAndAddBorder(comms_win, left, top, width, height)
+    posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(comms_win,"communications")
     EnableTriggerGroup ("brutal_comms_group",args)
     WindowShow (comms_win, args)
@@ -114,30 +115,39 @@ function setup_brutal_environment(args,source)
 
   --init buffs window if set true
   if buffs_win_enabled == true then
-    --long WindowCreate(BSTR WindowName, long Left, long Top, long Width, long Height, short Position, long Flags, long BackgroundColour);
     CreateMiniWindow(buffs_win)
-    local left, top, width, height = GetDeviceCaps(8) * 0.729, GetDeviceCaps(10) * 0.225, GetDeviceCaps(8) * 0.26, GetDeviceCaps(10) * 0.225
+    left = GetInfo(281) * 0.72 --x-axis
+    top =  posY --y-axis
+    width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
+    height = (WindowFontInfo (buffs_win, title_font, 1)) + (2 * TEXT_INSET) + (5 * sprite_height) --height of miniwindow
     ResizeAndAddBorder(buffs_win, left, top, width, height)
+    posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(buffs_win,"active buffs")
     WindowShow (buffs_win, args)
   end --if
 
   --init party window if set true
   if party_win_enabled == true then
-    --long WindowCreate(BSTR WindowName, long Left, long Top, long Width, long Height, short Position, long Flags, long BackgroundColour);
     CreateMiniWindow(party_win)
-    local left, top, width, height = GetDeviceCaps(8) * 0.729, 2 * (GetDeviceCaps(10) * 0.225), GetDeviceCaps(8) * 0.26, GetDeviceCaps(10) * 0.225
+    left = GetInfo(281) * 0.72 --x-axis
+    top = posY --y-axis
+    width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
+    height = GetInfo(280) * 0.225 --height of miniwindow
     ResizeAndAddBorder(party_win, left, top, width, height)
+    posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(party_win,"party placement")
     WindowShow (party_win, args)
   end --if
 
   --init status window if set true
   if stats_win_enabled == true then
-    --long WindowCreate(BSTR WindowName, long Left, long Top, long Width, long Height, short Position, long Flags, long BackgroundColour);
     CreateMiniWindow(stats_win)
-    local left, top, width, height, position = GetDeviceCaps(8) * 0.729, 3 * (GetDeviceCaps(10) * 0.225), GetDeviceCaps(8) * 0.26, GetDeviceCaps(10) * 0.225, miniwin.pos_bottom_right
-    ResizeAndAddBorder(stats_win, left, top, width, height, position)
+    left = GetInfo(281) * 0.72 --x-axis
+    top = posY --y-axis
+    width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
+    height = (WindowFontInfo (stats_win, title_font, 1)) + (3 * TEXT_INSET) + (7 * sprite_height) --height of miniwindow
+    ResizeAndAddBorder(stats_win, left, top, width, height)
+    posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(stats_win,"current status")
     --load images and sprites
     LoadAllSprites()

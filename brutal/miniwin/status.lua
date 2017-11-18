@@ -5,36 +5,41 @@ function build_stats_win()
   AddMiniWindowTitleBar(stats_win,"current status")
   --add empty container for x,y
   local posX_1, posX_2, posY = 0, 0, 0
-  --get the window width
-  local windowInfo = movewindow.install (windowName, miniwin.pos_top_right, miniwin.create_absolute_location, true)
-  local windowWidth = windowInfo.window_left
+
   --get y position for first sprite, just after title bar
   posY =  (2 * TEXT_INSET) + WindowFontInfo (stats_win, title_font, 1)
+  posX_1 = TEXT_INSET
+  posX_2 = (59 * TEXT_INSET)
   --draw the static images
-  WindowDrawImage (stats_win, "hp_img", TEXT_INSET, posY, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "sp_img", TEXT_INSET, posY + sprite_height * 1, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "ep_img", TEXT_INSET, posY + sprite_height * 2, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "exp_img", TEXT_INSET, posY + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "adv_img", TEXT_INSET * 50, posY + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "cash_img", TEXT_INSET, posY + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, "df_img", TEXT_INSET * 50, posY + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "hp_img", posX_1, posY, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "sp_img", posX_1, posY + sprite_height * 1, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "ep_img", posX_1, posY + sprite_height * 2, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "exp_img", posX_1, posY + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "adv_img", posX_2, posY + sprite_height * 3, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "cash_img", posX_1, posY + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "df_img", posX_2, posY + sprite_height * 4, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "karma_img", posX_1, posY + sprite_height * 6, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, "status_img", posX_2, posY + sprite_height * 6, 0, 0, miniwin.image_transparent_copy)  -- draw it
   --draw the dynamic images
   local dt_img = ingame_prompt["dt"] .. "_img"
   local phase_img = ingame_prompt["phase"] .. "_img"
-  WindowDrawImage (stats_win, dt_img, TEXT_INSET, posY + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
-  WindowDrawImage (stats_win, phase_img, TEXT_INSET * 50, posY + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, dt_img, posX_1, posY + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
+  WindowDrawImage (stats_win, phase_img, posX_2, posY + sprite_height * 5, 0, 0, miniwin.image_transparent_copy)  -- draw it
   --draw the static text titles for images
   posX_1 = (2 * TEXT_INSET + sprite_width)
-  posX_2 = (2 * TEXT_INSET * 26 + sprite_width)
-  WindowText (stats_win, body_font, "HP :", posX_1, (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "SP :", posX_1, (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "EP :", posX_1, (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "XP :", posX_1, (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "AD :", posX_2, (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "$$ :", posX_1, (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "DF :", posX_2, (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "DT :", posX_1, (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, "PH :", posX_2, (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
+  posX_2 = (60 * TEXT_INSET + sprite_width)
+  WindowText (stats_win, body_font, "HP :", posX_1, (TEXT_INSET + sprite_height * 1), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "SP :", posX_1, (TEXT_INSET + sprite_height * 2), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "EP :", posX_1, (TEXT_INSET + sprite_height * 3), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "XP :", posX_1, (TEXT_INSET + sprite_height * 4), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "AD :", posX_2, (TEXT_INSET + sprite_height * 4), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "$$ :", posX_1, (TEXT_INSET + sprite_height * 5), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "DF :", posX_2, (TEXT_INSET + sprite_height * 5), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "DT :", posX_1, (TEXT_INSET + sprite_height * 6), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "PH :", posX_2, (TEXT_INSET + sprite_height * 6), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "KA :", posX_1, (TEXT_INSET + sprite_height * 7), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, "ST :", posX_2, (TEXT_INSET + sprite_height * 7), 0, 0, theme.BODY_FONT_COLOUR)
+
   --draw the dynamic text
   posX_1 = posX_1 + WindowTextWidth (stats_win,body_font,"     ") -- five spaces, for x-axis
   posX_2 = posX_2 + WindowTextWidth (stats_win,body_font,"     ") -- five spaces, for x-axis
@@ -47,9 +52,9 @@ function build_stats_win()
   local myHP = hp .. "%"
   local mySP = sp .. "%"
   local myEP = ep .. "%"
-  WindowText (stats_win, body_font, myHP, posX_1 , (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, mySP, posX_1 , (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, myEP, posX_1 , (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, myHP, posX_1 , (TEXT_INSET + sprite_height * 1), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, mySP, posX_1 , (TEXT_INSET + sprite_height * 2), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, myEP, posX_1 , (TEXT_INSET + sprite_height * 3), 0, 0, theme.BODY_FONT_COLOUR)
 
   --grab exp, cash, df values, daytime and phase and format them
   local xp = commas(ingame_prompt["xp"])
@@ -63,19 +68,32 @@ function build_stats_win()
   local my_adv = exptoadv .. " (" .. protoadv .. ")"
   local daytime = ingame_prompt["dt"] .. ", " .. string.lower(ingame_prompt["hr"])
   local phase  = string.lower(ingame_prompt["phase"])
+  local karma = "karma counter comming soon"--placeholder for future code
+  local status = ingame_prompt["st"]
+  local status_colour = theme.BODY_FONT_COLOUR
+  if Trim(status) == "" then
+    status = "idle"
+  else
+    status_colour = BRIGHTRED
+  end --if
   --display them
-  WindowText (stats_win, body_font, my_exp, posX_1 , (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, my_adv, posX_2 , (TEXT_INSET + sprite_height * 4), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, cash, posX_1 , (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, df, posX_2 , (TEXT_INSET + sprite_height * 5), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, daytime, posX_1, (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, body_font, phase, posX_2 , (TEXT_INSET + sprite_height * 6), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, my_exp, posX_1 , (TEXT_INSET + sprite_height * 4), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, my_adv, posX_2 , (TEXT_INSET + sprite_height * 4), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, cash, posX_1 , (TEXT_INSET + sprite_height * 5), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, df, posX_2 , (TEXT_INSET + sprite_height * 5), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, daytime, posX_1, (TEXT_INSET + sprite_height * 6), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, phase, posX_2 , (TEXT_INSET + sprite_height * 6), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, karma, posX_1, (TEXT_INSET + sprite_height * 7), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, body_font, status, posX_2 , (TEXT_INSET + sprite_height * 7), 0, 0, status_colour)
+
+
   --draw the health guages
   local posX_3 = posX_1 + WindowTextWidth (stats_win,body_font,"     ") -- five spaces, for x-axis
   local guage_height = WindowFontInfo (stats_win, body_font, 1)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 1 + TEXT_INSET, hp, RED)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 2 + TEXT_INSET, sp, BLUE)
-  draw_stat_guages(posX_3,guage_height,sprite_height * 3 + TEXT_INSET, ep, GREEN)
+  local guage_size = 370
+  draw_stat_guages(posX_3,guage_height,guage_size,sprite_height * 1 + TEXT_INSET, hp, RED)
+  draw_stat_guages(posX_3,guage_height,guage_size,sprite_height * 2 + TEXT_INSET, sp, BLUE)
+  draw_stat_guages(posX_3,guage_height,guage_size,sprite_height * 3 + TEXT_INSET, ep, GREEN)
   --fill in the health stats
   local truehp = ingame_prompt["truehp"]
   local truesp = ingame_prompt["truesp"]
@@ -88,15 +106,15 @@ function build_stats_win()
   myEP = "[" .. trueep .. "/" .. maxep .. "]"
   posX_3 = posX_3 + 280
   --draw the text
-  WindowText (stats_win, track_update["hpFont"], myHP, posX_3, (TEXT_INSET + sprite_height * 1), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, track_update["spFont"], mySP, posX_3, (TEXT_INSET + sprite_height * 2), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
-  WindowText (stats_win, track_update["epFont"], myEP, posX_3, (TEXT_INSET + sprite_height * 3), windowWidth - TEXT_INSET, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, track_update["hpFont"], myHP, posX_3, (TEXT_INSET + sprite_height * 1), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, track_update["spFont"], mySP, posX_3, (TEXT_INSET + sprite_height * 2), 0, 0, theme.BODY_FONT_COLOUR)
+  WindowText (stats_win, track_update["epFont"], myEP, posX_3, (TEXT_INSET + sprite_height * 3), 0, 0, theme.BODY_FONT_COLOUR)
 end --function
 
-function draw_stat_guages(myPosX,guage_height,myPosY, myValue, myColour)
-      NUMBER_OF_TICKS = 9
-      BORDER_COLOUR = WHITE
-      GUAGE_SIZE = 375
+function draw_stat_guages(myPosX,guage_height,guage_size,myPosY, myValue, myColour)
+      local NUMBER_OF_TICKS = 9
+      local BORDER_COLOUR = WHITE
+      local GUAGE_SIZE = guage_size
       local Fraction = tonumber (myValue) / 100
 
       if Fraction > 1 then Fraction = 1 end
