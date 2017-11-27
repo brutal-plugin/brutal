@@ -106,10 +106,40 @@ function setup_brutal_environment(args,source)
     top = posY --y-axis
     width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
     height = (WindowFontInfo (comms_win, title_font, 1)) + (2 * TEXT_INSET) + (16 * WindowFontInfo (comms_win, body_font, 1)) --height of miniwindow
+
     ResizeAndAddBorder(comms_win, left, top, width, height)
-    posY = posY + height + 1 --calulate top position for next window
-    AddMiniWindowTitleBar(comms_win,"communications")
+    print(comms_win, left, top, width, height)
+    WindowAddHotspot(comms_win, comms_thumb,
+                    width - 15, top - 15, width, height,  -- position will be changed when we draw the window anyway
+                     "", -- MouseOver
+                     "", -- CancelMouseOver
+                     "comms_MouseDown",
+                     "", -- CancelMouseDown
+                     "", -- MouseUp
+                     "scrollbar tooltip",   -- TooltipText
+                     miniwin.cursor_arrow,
+                     0)  -- Flags
+    WindowDragHandler(comms_win, comms_thumb, "comms_dragMove", "", 0)
+    WindowRectOp (comms_win, miniwin.rect_fill, width - 15, top - 15, width, height, theme.TITLE_BACKGROUND)
+
+    AddMiniWindowTitleBar(comms_win,"communications", true)
+    local titleHeight = WindowFontInfo (comms_win, title_font, 1) + (1 * TEXT_INSET)
+    WindowAddHotspot(comms_win, comms_wheel_hotspot,
+                     0, titleHeight, width - comms_scrollbar_size, 0,
+                     "", -- MouseOver
+                     "", -- CancelMouseOver
+                     "", -- MouseDown
+                     "", -- CancelMouseDown
+                     "comms_MouseUpInClient", -- MouseUp
+                     "", -- TooltipText
+                     miniwin.cursor_arrow,
+                     0)  -- Flags
+
+    WindowScrollwheelHandler(comms_win, comms_wheel_hotspot, "comms_wheelMove");
     EnableTriggerGroup ("brutal_comms_group",args)
+
+    posY = posY + height + 1 --calulate top position for next window
+    comms_WINDOW_WIDTH = WindowInfo (comms_win, 3) - 2*TEXT_INSET - comms_scrollbar_size
     WindowShow (comms_win, args)
   end --if
 
@@ -135,7 +165,7 @@ function setup_brutal_environment(args,source)
     height = GetInfo(280) * 0.225 --height of miniwindow
     ResizeAndAddBorder(party_win, left, top, width, height)
     posY = posY + height + 1 --calulate top position for next window
-    AddMiniWindowTitleBar(party_win,"party placement")
+    AddMiniWindowTitleBar(party_win,"party placement",true)
     WindowShow (party_win, args)
   end --if
 
@@ -148,7 +178,7 @@ function setup_brutal_environment(args,source)
     height = (WindowFontInfo (stats_win, title_font, 1)) + (3 * TEXT_INSET) + (7 * sprite_height) --height of miniwindow
     ResizeAndAddBorder(stats_win, left, top, width, height)
     posY = posY + height + 1 --calulate top position for next window
-    AddMiniWindowTitleBar(stats_win,"current status")
+    AddMiniWindowTitleBar(stats_win,"current status",true)
     --load images and sprites
     LoadAllSprites()
     WindowShow (stats_win, args)

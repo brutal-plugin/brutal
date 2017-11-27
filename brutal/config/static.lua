@@ -25,3 +25,15 @@ TEXT_INSET = 5
 sprites = {}
 sprite_width = 32
 sprite_height = 32
+--create empty table container for communicaitons
+comms = {}
+rawlines = {}
+comms_MAX_LINES = 1000
+comms_lineStart = ""
+comms_lineEnd = ""
+comms_WINDOW_COLUMNS = ""
+comms_WINDOW_LINES = ""
+comms_WINDOW_WIDTH = 0
+comms_thumb = "comms_thumb"
+comms_wheel_hotspot = "comms_wheel_hotspot"
+comms_scrollbar_size = 15

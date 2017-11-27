@@ -68,7 +68,7 @@ function build_stats_win()
   local my_adv = exptoadv .. " (" .. protoadv .. ")"
   local daytime = ingame_prompt["dt"] .. ", " .. string.lower(ingame_prompt["hr"])
   local phase  = string.lower(ingame_prompt["phase"])
-  local karma = "karma counter comming soon"--placeholder for future code
+  local karma = "karma counter coming soon"--placeholder for future code
   local status = ingame_prompt["st"]
   local status_colour = theme.BODY_FONT_COLOUR
   if Trim(status) == "" then

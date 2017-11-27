@@ -50,10 +50,13 @@ function ResizeAndAddBorder(windowName, left, top, width, height)
   check (WindowRectOp (windowName, 1, 0, 0, 0, 0, theme.WINDOW_BORDER))
 end --function SetMiniWindowPositions
 
-function AddMiniWindowTitleBar(windowName,title)
+function AddMiniWindowTitleBar(windowName,title,blank)
   local windowInfo = movewindow.install (windowName, miniwin.pos_top_right, miniwin.create_absolute_location, true)
   local titleHeight = WindowFontInfo (windowName, title_font, 1) + (1 * TEXT_INSET)
   local titleWidth = windowInfo.window_left
+  if blank == true then
+    WindowRectOp (windowName, miniwin.rect_fill, 0, 0, 0, 0, theme.WINDOW_BACKGROUND)
+  end --if
   WindowRectOp (windowName, miniwin.rect_fill, 0, 0, 0, titleHeight, theme.TITLE_BACKGROUND)
   WindowText (windowName, title_font, title, TEXT_INSET, 0, titleWidth - TEXT_INSET, 0, FOREGROUND)
   WindowRectOp (windowName, 1, 0, 0, 0, 0, theme.WINDOW_BORDER)
