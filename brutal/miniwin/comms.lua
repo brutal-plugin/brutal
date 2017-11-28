@@ -53,12 +53,12 @@ function SplitCommsWithStyles(styles,availableWidth,howManySplits)
         -- keep going until out of columns
         while col > 1 do
           local width = 0
-          if textLength >= 1 then --should we add the trailing space for the styles before?
+          if textLength >= 1 then --there were a bunch of styles that took up space.
             width = WindowTextWidth (comms_win, body_font, " ") * textLength + WindowTextWidth (comms_win, body_font, style.text:sub (1, col))
           else
             width = WindowTextWidth (comms_win, body_font, style.text:sub (1, col))
           end --if
-          if width <= availableWidth then
+          if width <= availableWidth then --will it now fit?
             if not split_col then
               split_col = col  -- in case no space found, this is where we can split
             end --if
@@ -88,7 +88,7 @@ function SplitCommsWithStyles(styles,availableWidth,howManySplits)
               textLength = 0 --reset new line text length, dont need it, just so i know :)
               howManySplits = howManySplits - 1 --reduce by one, fastest way to calulate it.
               SplitCommsWithStyles(tmp2,availableWidth,howManySplits) --itrate it again
-            else --doubt that we will reach to this, but lets just have it incase.
+            else --if the second line fits, then lets wrap up this chapter.
               table.insert (tmp2,line_2nd)
               table.insert (comms,tmp2)
             end --if WindowTextWidth (comms_win, body_font, line_2nd.text) >= availableWidth

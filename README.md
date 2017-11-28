@@ -19,6 +19,9 @@ This is how my muschlient looks like when im idle:
 And when there is some action
 ![ALt text](brutal/screenshots/scr_fs_action.png)
 
+[updated] latest screenshot, showing layout plan and includes a (semi) working chat plugin
+![ALt text](brutal/screenshots/scr_001.png)
+
 ## **#installing**
 
 * dowload and extract zip file (our use git to clone) into your '..MUSHCLient\worlds\plugin' folder
