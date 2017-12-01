@@ -10,6 +10,7 @@ decor_win = "decor_" .. GetPluginID()
 stats_win = "stats_" .. GetPluginID()
 comms_win = "comms_" .. GetPluginID()
 party_win = "party_" .. GetPluginID()
+pgrid_win = "pgrid_" .. GetPluginID()
 minfo_win = "minfo_" .. GetPluginID()
 buffs_win = "buffs_" .. GetPluginID()
 --create empty containers for each of the different font styles.
@@ -37,3 +38,6 @@ comms_WINDOW_WIDTH = 0
 comms_thumb = "comms_thumb"
 comms_wheel_hotspot = "comms_wheel_hotspot"
 comms_scrollbar_size = 15
+--create empty table containers for party
+PartyGrid = {}
+myParty = {}

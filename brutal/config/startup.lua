@@ -108,7 +108,6 @@ function setup_brutal_environment(args,source)
     height = (WindowFontInfo (comms_win, title_font, 1)) + (2 * TEXT_INSET) + (16 * WindowFontInfo (comms_win, body_font, 1)) --height of miniwindow
 
     ResizeAndAddBorder(comms_win, left, top, width, height)
-    print(comms_win, left, top, width, height)
     WindowAddHotspot(comms_win, comms_thumb,
                     width - 15, top - 15, width, height,  -- position will be changed when we draw the window anyway
                      "", -- MouseOver
@@ -149,7 +148,7 @@ function setup_brutal_environment(args,source)
     left = GetInfo(281) * 0.72 --x-axis
     top =  posY --y-axis
     width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
-    height = (WindowFontInfo (buffs_win, title_font, 1)) + (2 * TEXT_INSET) + (5 * sprite_height) --height of miniwindow
+    height = (WindowFontInfo (buffs_win, title_font, 1)) + (2 * TEXT_INSET) + (3 * sprite_height) --height of miniwindow
     ResizeAndAddBorder(buffs_win, left, top, width, height)
     posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(buffs_win,"active buffs")
@@ -159,14 +158,21 @@ function setup_brutal_environment(args,source)
   --init party window if set true
   if party_win_enabled == true then
     CreateMiniWindow(party_win)
+    CreateMiniWindow(pgrid_win)
     left = GetInfo(281) * 0.72 --x-axis
     top = posY --y-axis
     width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
-    height = GetInfo(280) * 0.225 --height of miniwindow
+    --height = GetInfo(280) * 0.225 --height of miniwindow
+    height = (WindowFontInfo (party_win, title_font, 1) + TEXT_INSET) + (12 * TEXT_INSET) + (WindowFontInfo (party_win, body_font, 1) * 12)
     ResizeAndAddBorder(party_win, left, top, width, height)
+    local pgrid_height = height - (WindowFontInfo (party_win, title_font, 1) + TEXT_INSET)
+    local pgrid_top = top + WindowFontInfo (party_win, title_font, 1) +  TEXT_INSET
+    ResizeAndAddBorder(pgrid_win, left, pgrid_top , width, pgrid_height)
     posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(party_win,"party placement",true)
+    CheckPartyStatus(args)
     WindowShow (party_win, args)
+    WindowShow (pgrid_win, args)
   end --if
 
   --init status window if set true
