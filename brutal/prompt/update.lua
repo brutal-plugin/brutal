@@ -8,9 +8,6 @@ function healthbar_update(name,line,wildcards)
       end --if
      end --if
   end --for
-  if name == "party_self_bar" then
-    --insert function for party
-  end --f
   build_infobar()
   build_stats_win()
 end --function
