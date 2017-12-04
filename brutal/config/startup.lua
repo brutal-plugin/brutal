@@ -67,8 +67,6 @@ function so_whoami()
     local player_name = wait.match("You are *.",1)
     if player_name then
       whoami = string.match (player_name,"^You are (.+)\.$")
-      local team_party_guages = "^\\\<party\\\>: (?<p_name>.+) \\\>\\\> HP:\\\[.......\\\].(?<hp>.+)% SP:\\\[.......\\\] (?<sp>.+)% EP:\\\[.......\\\] (?<ep>.+)%$"
-      AddTrigger("party_team_bar", team_party_guages, "", 41 , -1, 0, "", "updatePartyStats")
     end --if
   end --if
 end --function
@@ -78,6 +76,7 @@ function setup_brutal_environment(args,source)
   --enable/disable triggers
   EnableTriggerGroup ("brutal_prompt_group",args)
   EnableTriggerGroup ("reset_status",args)
+  EnableTriggerGroup ("brutal_party", args)
 
   --setup theme if enabled
   if brutal_theme_enabled == true then
@@ -158,6 +157,7 @@ function setup_brutal_environment(args,source)
   if party_win_enabled == true then
     CreateMiniWindow(party_win)
     CreateMiniWindow(pgrid_win)
+    EnableTriggerGroup ("brutal_party", true)
     left = GetInfo(281) * 0.72 --x-axis
     top = posY --y-axis
     width = GetInfo(281) * 0.28 - 1 --width size of miniwindow
@@ -168,8 +168,11 @@ function setup_brutal_environment(args,source)
     local pgrid_top = top + WindowFontInfo (party_win, title_font, 1) +  TEXT_INSET
     ResizeAndAddBorder(pgrid_win, left, pgrid_top , width, pgrid_height)
     posY = posY + height + 1 --calulate top position for next window
-    AddMiniWindowTitleBar(party_win,"party placement",true)
-    CheckPartyStatus(args)
+    AddMiniWindowTitleBar(party_win,"party placement -- create or join a par",true)
+    if args == true then
+      CheckPartyStatus()
+      note ("checking if we are in a party ..")
+    end --if
     WindowShow (party_win, args)
     WindowShow (pgrid_win, args)
   end --if

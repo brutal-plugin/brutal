@@ -1,30 +1,42 @@
-function CreateEmptyPartyGrid()
-  for x=1,3 do
-    for y=1,3 do
-      local myPos = x .. y
-      table.insert (PartyGrid, myPos, {
-            name = "",
-            hp  = 0,
-            sp = 0,
-            ep = 0,
-          })
-    end --for y
-  end --for x
-end --function CreateEmptyPartyGrid
+function AddPartyTriggers()
+  local party_guages = "^\\\<party\\\>: (?<p_name>.+) \\\>\\\> HP:\\\[.......\\\].(?<hp>.+)% SP:\\\[.......\\\] (?<sp>.+)% EP:\\\[.......\\\] (?<ep>.+)%$"
+  local party_moves = "^(?<p_name>.+) moves to position (?<x>.+),(?<y>.+)\\\.$"
+  local party_kicks = "^(?<p_leader>.+) kicks (?<p_name>.+) out from party\\\."
+  local party_leave = "^(?<p_name>.+) has left the party\\\."
+  local party_joins = "(?<p_name>.+) steps to position (?<x>.+),(?<y>.+) and starts following the leader\\\."
+  local party_guide = "^(?<p_leader>.+) guides (?<p_name>.+) to position (?<x>.+),(?<y>.+)\\\.$"
+  local party_leave = "^(?<p_name>.+) has left the party\\\."
+  local party_destroy = "^You leave the party\\\."
+  local party_swaps = "^(?<p_one>.+) moves to (?<x1>.+),(?<y1>.+) and (?<p_two>.+) moves to (?<x2>.+),(?<y2>.+)\\\.$"
+  local party_join = "^You join the party\\\.$"
+  local party_create = "^You form a party called (?<party_name>.+)\\\.$"
+  local flags = 8 + 32 --KeepEvaluating + RegularExpression
+  AddTrigger("party_guages", party_guages, "", flags , -1, 0, "", "updatePartyStats")
+  AddTrigger("party_moves", party_moves, "", flags , -1, 0, "", "updatePartyMoves")
+  AddTrigger("party_kicks", party_kicks, "", flags , -1, 0, "", "updatePartyKicks")
+  AddTrigger("party_leave", party_leave, "", flags , -1, 0, "", "updatePartyKicks")
+  AddTrigger("party_joins", party_joins, "", flags , -1, 0, "", "updatePartyJoins")
+  AddTrigger("party_guide", party_guide, "", flags , -1, 0, "", "updatePartyGuide")
+  AddTrigger("party_swaps", party_swaps, "", flags , -1, 0, "", "updatePartySwaps")
+  AddTrigger("party_destroy", party_destroy, "", flags , -1, 0, "", "destroyParty")
+  AddTrigger("party_create", party_create, "", flags + 1, -1, 0, "", "createNewParty") --always enabled
+  AddTrigger("party_join", party_join, "", flags + 1, -1, 0, "", "CheckPartyStatus") --always enabled
+  local brutal_party = {"guages","moves","kicks","leave","joins","guide","destroy","swaps"}
+  for k, v in pairs (brutal_party) do
+    SetTriggerOption("party_" .. v,"group","brutal_party")
+  end --for
+end --function
 
---CreateEmptyPartyGrid()
-function CheckPartyStatus(args)
+function CheckPartyStatus()
   wait.make (function()
-    if args == false then
-      return
-    end --if
-    note ("checking if we are in a party ..")
-    send ("p created")
-    local party_check = wait.regexp ("^You are not in a party\\.$|^Your party was created\.+$",3)
+    EnableTriggerGroup ("brutal_party", true)
+    send ("party status")
+    local party_check = wait.regexp ("^\\\| Partyname: (?<party_name>.+)Kills made:(.+)\\\|$|^You are not in a party\\\!$",2)
     if party_check then
-      if string.match (party_check,"Your party was created*") then
-        note ("grabbing party status information ..")
-        send ("ps")
+      if string.match (party_check,"| Partyname*") then
+        local re = rex.new ("^\\\| Partyname: (?<party_name>.+)Kills made:(.+)\\\|$")
+        local s, e, t = re:match (party_check)
+        AddMiniWindowTitleBar(party_win,"party placement -- " .. Trim(t.party_name) ,true)
         wait.match ("+-\*", 3)
         local failsafe, party = 0, {}
         while true do
@@ -55,8 +67,9 @@ function CheckPartyStatus(args)
         end --for
         FillPartyGrid()
       else
+        EnableTriggerGroup ("brutal_party", false)
         if WindowInfo (party_win, 6) == false then --Is it hidden right now?
-          AddMiniWindowTitleBar(party_win,"party placement -- currently not in a party",true)
+          AddMiniWindowTitleBar(party_win,"party placement -- create or join a party",true)
         end --if
         myParty = {} --empty the party table so we do not display old stats
       end --if
@@ -64,7 +77,24 @@ function CheckPartyStatus(args)
   end) --wait
 end --function CheckPartyStatus
 
+function createNewParty(name,line,wildcards)
+  EnableTriggerGroup("brutal_party",true)
+  myParty[whoami] = {}
+  table.insert (myParty[whoami],{
+    row = 1,
+    col = 1,
+    hp = ingame_prompt["hp"],
+    sp = ingame_prompt["sp"],
+    ep = ingame_prompt["ep"]
+  })
+  AddMiniWindowTitleBar(party_win,"party placement -- " .. wildcards.party_name,true)
+  FillPartyGrid()
+end --function
+
 function FillPartyGrid()
+  if GetTriggerInfo ("party_guages", 8) == false then
+    return
+  end --if
   local left = WindowInfo (pgrid_win, 10)   --Where it is right now: left
   local top = WindowInfo (pgrid_win, 11)    --Where it is right now: top
   local width = WindowInfo (pgrid_win, 3)   --Width
@@ -110,10 +140,7 @@ function FillPartyGrid()
 end --function
 
 function updatePartyStats(name,line,wildcards)
-  --\<party\>: (?<pname>\S+) \>\> HP:\[.+\] (?<p_hp>.+)% SP:\[.+\] (?<p_sp>.+)\% EP:\[.+] (?<p_ep>.+)%
-  --\\\<party\>: (?<p_name>\S+) \\\>\\\> HP:\\\[.+\\\] (?<p_hp>.+)\\\% SP:\\\[.+\\\] (?<p_sp>.+)\\\% EP:\[.+] (?<p_ep>.+)\\\%
-  local p_name = wildcards.p_name
-  if p_name == whoami then
+  if wildcards.p_name == whoami then
     local objects = {"hp","sp","ep"}
     for k, v in pairs (objects) do
       if tonumber(ingame_prompt[v]) ~= tonumber(wildcards[v]) then
@@ -127,7 +154,7 @@ function updatePartyStats(name,line,wildcards)
   end --if
   local hp, sp, ep = tonumber(wildcards.hp), tonumber(wildcards.sp), tonumber(wildcards.ep)
   for k, v in pairs (myParty) do
-    if k == p_name then
+    if k == wildcards.p_name then
       local outer = myParty[k]
       local inner = (outer[1])
       local row = inner["row"]
@@ -140,11 +167,98 @@ function updatePartyStats(name,line,wildcards)
         sp = sp,
         ep = ep
       })
+      myParty[k] = {}
       myParty[k] = tmp
     end --if
   end --for
   FillPartyGrid()
 end --function updatePartyGrid
+
+function updatePartyMoves(name,line,wildcards)
+  local p_name = wildcards.p_name
+  local outer = myParty[p_name]
+  local inner = outer[1]
+  myParty[p_name] = {}
+  table.insert (myParty[p_name],{
+    row = wildcards.x,
+    col = wildcards.y,
+    hp = inner["hp"],
+    sp = inner["sp"],
+    ep = inner["ep"]
+  })
+  FillPartyGrid()
+end --function
+
+function updatePartyKicks(name,line,wildcards)
+  table.remove (myParty[wildcards.p_name])
+  FillPartyGrid()
+end --function
+
+function updatePartySwaps(name,line,wildcards)
+  local p_one = {p_name = wildcards.p_one, x = wildcards.x1, y = wildcards.y1}
+  local p_two = {p_name = wildcards.p_two, x = wildcards.x2, y = wildcards.y2}
+  updatePartyMoves("name","line",p_one)
+  updatePartyMoves("name","line",p_two)
+end --function
+
+function destroyParty()
+  myParty = {}
+  AddMiniWindowTitleBar(party_win,"party placement -- create or join a party",true)
+  EnableTriggerGroup ("brutal_party", false)
+  WindowShow (pgrid_win, false)
+end --function
+
+function updatePartyGuide(name,line,wildcards)
+  local p_name = wildcards.p_name
+  if not next (myParty[p_name]) then
+    local outer = myParty[p_name]
+    local inner = outer[1]
+    myParty[p_name] = {}
+    table.insert (myParty[p_name],{
+      row = wildcards.x,
+      col = wildcards.y,
+      hp = inner["hp"],
+      sp = inner["sp"],
+      ep = inner["ep"]
+    })
+  else
+    myParty[p_name] ={}
+    table.insert (myParty[p_name],{
+      row = wildcards.x,
+      col = wildcards.y,
+      hp = 100,
+      sp = 100,
+      ep = 100
+    })
+  end --if
+  FillPartyGrid()
+end --function
+
+function updatePartyJoins(name,line,wildcards)
+  local p_name = wildcards.p_name
+  if not (myParty[p_name]) then
+    myParty[p_name] = {}
+    table.insert (myParty[p_name],{
+      row = wildcards.x,
+      col = wildcards.y,
+      hp = 100,
+      sp = 100,
+      ep = 100
+    })
+  else
+    local outer = myParty[p_name]
+    local inner = outer[1]
+    myParty[p_name] = {}
+    table.insert (myParty[p_name],{
+      row = wildcards.x,
+      col = wildcards.y,
+      hp = inner["hp"],
+      sp = inner["sp"],
+      ep = inner["ep"]
+    })
+  end --if
+  FillPartyGrid()
+end --function
 
 function DrawBlankPartyGrid()
   if not next (PartyGrid) then
