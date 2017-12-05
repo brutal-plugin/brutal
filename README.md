@@ -25,9 +25,9 @@ Here is how it looks like in action
 
 ## **#known issues, future stuff and notes**
 * review icesus 'help triggers'; this plugin does NOT send any game breaking commands. please feel free to contact me if something is a miss.
-* graphical elements may look ugly over wine on linux. (nothing i can do about this)
+* graphical elements may look ugly over wine on linux. (nothing i can do about this).
 * i might put in scrollbars in the chat window in a future relase.
-* buffs window needs some work, need your help as i need the text that triggers start and finish of buff
+* buffs window needs some work, need your help for triggers to start and finish off the buff.
 * errors may crop up if your internet connection is too laggy.
 * need to find a way to reclaim that screen real-estate when not in party.
 * do not blame plugin for death, loss of exp etc.
@@ -40,8 +40,8 @@ Here is how it looks like in action
 * type '#brutal' to restore your original prompt
 * type 'unalias #brutal' to remove saved alias
 
-## **#credits**
-thanks to Henrique Lazarini for icons and sprites:
+## **#credits and thanks**
+Henrique Lazarini for icons and sprites:
 
 https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg
 
@@ -49,11 +49,10 @@ deathwing backdrop image has been modified, original source from:
 
 http://wallpaperswide.com/deathwing-wallpapers.html
 
-thanks to the creators of the font inconsolata, i sourced from:
+Raph Levien for creating the inconsolata font, i sourced from:
 
 https://fonts.google.com/specimen/Inconsolata
 
-most code has been written from scratch, using templates and examples from the muschlient forums.
-loads of thanks to Nick and Fendish at mushclient dot com.
+Nick and Fendish at mushclient dot com. parts of this plugin would not be possible with the hard work, code, and examples from these gurus.
 
 http://mushclient.com/mushclient/mushclient.htm
