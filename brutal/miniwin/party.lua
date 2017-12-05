@@ -1,13 +1,13 @@
 function AddPartyTriggers()
   local party_guages = "^\\\<party\\\>: (?<p_name>.+) \\\>\\\> HP:\\\[.......\\\].(?<hp>.+)% SP:\\\[.......\\\] (?<sp>.+)% EP:\\\[.......\\\] (?<ep>.+)%$"
   local party_moves = "^(?<p_name>.+) moves to position (?<x>.+),(?<y>.+)\\\.$"
-  local party_kicks = "^(?<p_leader>.+) kicks (?<p_name>.+) out from party\\\."
-  local party_leave = "^(?<p_name>.+) has left the party\\\."
-  local party_joins = "(?<p_name>.+) steps to position (?<x>.+),(?<y>.+) and starts following the leader\\\."
+  local party_kicks = "^(?<p_leader>.+) kicks (?<p_name>.+) out from party\\\.$"
+  local party_joins = "(?<p_name>.+) steps to position (?<x>.+),(?<y>.+) and starts following the leader\\\.$"
   local party_guide = "^(?<p_leader>.+) guides (?<p_name>.+) to position (?<x>.+),(?<y>.+)\\\.$"
-  local party_leave = "^(?<p_name>.+) has left the party\\\."
-  local party_destroy = "^You leave the party\\\."
+  local party_leave = "^(?<p_name>.+) has left the party\\\.$"
+  local party_destroy = "^You leave the party\\\.$"
   local party_swaps = "^(?<p_one>.+) moves to (?<x1>.+),(?<y1>.+) and (?<p_two>.+) moves to (?<x2>.+),(?<y2>.+)\\\.$"
+  local party_rename = "^(?<p_name>.+) renames the party to '(?<party_name>.+)'\\\.$"
   local party_join = "^You join the party\\\.$"
   local party_create = "^You form a party called (?<party_name>.+)\\\.$"
   local flags = 8 + 32 --KeepEvaluating + RegularExpression
@@ -18,10 +18,11 @@ function AddPartyTriggers()
   AddTrigger("party_joins", party_joins, "", flags , -1, 0, "", "updatePartyJoins")
   AddTrigger("party_guide", party_guide, "", flags , -1, 0, "", "updatePartyGuide")
   AddTrigger("party_swaps", party_swaps, "", flags , -1, 0, "", "updatePartySwaps")
+  AddTrigger("party_rename", party_rename, "", flags , -1, 0, "", "updatePartyRename")
   AddTrigger("party_destroy", party_destroy, "", flags , -1, 0, "", "destroyParty")
   AddTrigger("party_create", party_create, "", flags + 1, -1, 0, "", "createNewParty") --always enabled
   AddTrigger("party_join", party_join, "", flags + 1, -1, 0, "", "CheckPartyStatus") --always enabled
-  local brutal_party = {"guages","moves","kicks","leave","joins","guide","destroy","swaps"}
+  local brutal_party = {"guages","moves","kicks","leave","joins","guide","destroy","swaps","rename"}
   for k, v in pairs (brutal_party) do
     SetTriggerOption("party_" .. v,"group","brutal_party")
   end --for
@@ -199,6 +200,10 @@ function updatePartySwaps(name,line,wildcards)
   local p_two = {p_name = wildcards.p_two, x = wildcards.x2, y = wildcards.y2}
   updatePartyMoves("name","line",p_one)
   updatePartyMoves("name","line",p_two)
+end --function
+
+function updatePartyRename(name,line,wildcards)
+  AddMiniWindowTitleBar(party_win,"party placement -- " .. wildcards.party_name,true)
 end --function
 
 function destroyParty()

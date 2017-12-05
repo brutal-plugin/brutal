@@ -25,6 +25,24 @@ function capture_prompt(name,line,wildcards,styles)
   --build the infobar
   build_infobar()
   build_stats_win()
+  --update self stats on party grid
+  if myParty[whoami] ~= nil then
+    local outer = myParty[whoami]
+    local inner = (outer[1])
+    local row = inner["row"]
+    local col = inner["col"]
+    local tmp ={}
+    table.insert (tmp,{
+      row = row,
+      col = col,
+      hp = ingame_prompt["hp"],
+      sp = ingame_prompt["sp"],
+      ep = ingame_prompt["ep"]
+    })
+    myParty[whoami] = {}
+    myParty[whoami] = tmp
+    FillPartyGrid()
+  end --if
 end --function capture_prompt
 
 function make_bar_colours (mypercent)

@@ -19,7 +19,7 @@ function config_brutal_alias()
   wait.make (function()
       note ("checking for #brutal alias .." )
       send ("alias #brutal")
-      local check = wait.regexp("^The alias #brutal wasn't found\.$",1)
+      local check = wait.regexp("^The alias \\\#brutal wasn\\\'t found\\\.$",1)
         if check then
           wait.time(0.5)
           extract_prompt()
@@ -41,18 +41,22 @@ function activate_brutal ()
       so_whoami()
       note ("checking for #brutal alias .." )
       send ("alias #brutal")
-      local alias_check = wait.regexp("^\#brutal.+$",1)
+      local alias_check = wait.regexp("^\\\#brutal\\\s+set prompt(.+)$",1)
       if alias_check then
+          note ("#brutal alias detected ..")
           setup_brutal_environment (true,false)
+          wait.time(0.1)
           send ("")
-          local prompt_check =  wait.regexp("^\#brutal.+$",1)
+          local prompt_check =  wait.regexp("^\\\#brutal(.+)$",1)
           if not prompt_check then
             note ("capturing prompt .. ")
             send ("set prompt " .. brutal_prompt )
           end --if
-          wait.time (0.1)
-          note ("#brutal activated .. ")
-          return
+          local activation = wait.regexp("^Variable updated: prompt$",1)
+          if activation then
+            note ("#brutal activated .. ")
+            return
+          end --if
       else
         note ("try '#brutal config'")
       end --if
@@ -67,6 +71,7 @@ function so_whoami()
     local player_name = wait.match("You are *.",1)
     if player_name then
       whoami = string.match (player_name,"^You are (.+)\.$")
+      note ("Aye! life is full of surprises, when you realize that you are " .. whoami)
     end --if
   end --if
 end --function
@@ -170,8 +175,9 @@ function setup_brutal_environment(args,source)
     posY = posY + height + 1 --calulate top position for next window
     AddMiniWindowTitleBar(party_win,"party placement -- create or join a par",true)
     if args == true then
-      CheckPartyStatus()
+      wait.time(0.1)
       note ("checking if we are in a party ..")
+      CheckPartyStatus()
     end --if
     WindowShow (party_win, args)
     WindowShow (pgrid_win, args)
@@ -203,7 +209,7 @@ end
 function extract_prompt()
   wait.make (function ()
     eval_terminal()
-    wait.time (0.5)
+    wait.time (0.1)
     note ("trying to determine prompt from 'set' ..")
     send ("set")
     local user_prompt = wait.match("| prompt               : Yes :*",2)
@@ -211,16 +217,22 @@ function extract_prompt()
       local dump, keep = string.match(user_prompt,"^\| prompt\(.+): Yes : (.+)\|$")
       if keep then
         note ("discovered prompt settings ..")
-        wait.time(0.5)
-        note ("backing up current prompt in 'alias #brutal' .. ")
-        send ("alias #brutal set prompt " .. keep)
-        wait.time(0.5)
-        note "reconfiguring prompt for use for #brutal .."
-        send ("set prompt " .. brutal_prompt )
-        wait.time(0.5)
-        so_whoami()
-        wait.time(0.5)
-        setup_brutal_environment (true,true)
+        local pause = wait.regexp ("^Random typomessages(.+)$")
+        if pause then
+          note ("backing up current prompt in 'alias #brutal' .. ")
+          send ("alias #brutal set prompt " .. keep)
+        end --if
+        pause = wait.regexp ("^Alias:(.+)added\\\.$",1)
+        if pause then
+          note "reconfiguring prompt for use for #brutal .."
+          send ("set prompt " .. brutal_prompt )
+        end --if
+        pause = wait.regexp ("^Variable updated: prompt$",1)
+        if pause then
+          so_whoami()
+          setup_brutal_environment (true,true)
+        end --if
+        wait.time (1)
         note ("#brutal configuration completed ..")
         note("type '#brutal' to activate/deactivate ..")
         note ("#brutal activated ..")
@@ -239,6 +251,7 @@ function extract_prompt()
 end --extract_prompt
 
 function eval_terminal()
+  wait.time(1)
   note ("checking terminal settings ..")
   send ("term")
   local term = wait.match ("Your term type is \*",1)
