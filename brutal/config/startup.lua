@@ -78,11 +78,6 @@ end --function
 
 
 function setup_brutal_environment(args,source)
-  --enable/disable triggers
-  EnableTriggerGroup ("brutal_prompt_group",args)
-  EnableTriggerGroup ("reset_status",args)
-  EnableTriggerGroup ("brutal_party", args)
-
   --setup theme if enabled
   if brutal_theme_enabled == true then
     set_brutal_theme()
@@ -181,6 +176,10 @@ function setup_brutal_environment(args,source)
     end --if
     WindowShow (party_win, args)
     WindowShow (pgrid_win, args)
+    --enable/disable triggers
+    EnableTriggerGroup ("brutal_prompt_group",args)
+    EnableTriggerGroup ("reset_status",args)
+    EnableTriggerGroup ("brutal_party", args)
   end --if
 
   --init status window if set true

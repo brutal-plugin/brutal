@@ -30,7 +30,6 @@ end --function
 
 function CheckPartyStatus()
   wait.make (function()
-    EnableTriggerGroup ("brutal_party", true)
     send ("party status")
     local party_check = wait.regexp ("^\\\| Partyname: (?<party_name>.+)Kills made:(.+)\\\|$|^You are not in a party\\\!$",2)
     if party_check then
@@ -66,6 +65,7 @@ function CheckPartyStatus()
             ep = e
           })
         end --for
+        EnableTriggerGroup ("brutal_party", true)
         FillPartyGrid()
       else
         EnableTriggerGroup ("brutal_party", false)
@@ -79,7 +79,6 @@ function CheckPartyStatus()
 end --function CheckPartyStatus
 
 function createNewParty(name,line,wildcards)
-  EnableTriggerGroup("brutal_party",true)
   myParty[whoami] = {}
   table.insert (myParty[whoami],{
     row = 1,
@@ -89,6 +88,7 @@ function createNewParty(name,line,wildcards)
     ep = ingame_prompt["ep"]
   })
   AddMiniWindowTitleBar(party_win,"party placement -- " .. wildcards.party_name,true)
+  EnableTriggerGroup("brutal_party",true)
   FillPartyGrid()
 end --function
 
