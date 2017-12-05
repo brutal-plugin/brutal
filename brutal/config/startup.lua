@@ -19,7 +19,7 @@ function config_brutal_alias()
   wait.make (function()
       note ("checking for #brutal alias .." )
       send ("alias #brutal")
-      local check = wait.regexp("^The alias \\\#brutal wasn\\\'t found\\\.$",1)
+      local check = wait.regexp("^The alias \\\#brutal wasn't found\\\.$",1)
         if check then
           wait.time(0.5)
           extract_prompt()
@@ -71,7 +71,7 @@ function so_whoami()
     local player_name = wait.match("You are *.",1)
     if player_name then
       whoami = string.match (player_name,"^You are (.+)\.$")
-      note ("Aye! life is full of surprises, when you realize that you are " .. whoami)
+      note ("Yes, people take notice of your identity crisis.")
     end --if
   end --if
 end --function

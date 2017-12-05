@@ -7,20 +7,11 @@ I recommend to creating a new world in mushclient before installing. This plugin
 **You have been warned!**
 
 ## **#screenshots**
-This plugin will dynamically capture your prompt and display it on the infobar:
-![ALt text](brutal/screenshots/infobar_scr.png)
+Plugin Features:
+![ALt text](brutal/screenshots/plugin_features.png)
 
-Additional information will be captured and displayed in a floating mini window:
-![ALt text](brutal/screenshots/miniwin_scr.png)
-
-This is how my muschlient looks like when im idle:
-![ALt text](brutal/screenshots/scr_fs_idle.png)
-
-And when there is some action
-![ALt text](brutal/screenshots/scr_fs_action.png)
-
-[updated] latest screenshot, showing layout plan and includes a (semi) working chat plugin
-![ALt text](brutal/screenshots/scr_001.png)
+Here is how it looks like in action
+![ALt text](brutal/screenshots/brutal_snapshot.png)
 
 ## **#installing**
 
@@ -32,21 +23,22 @@ And when there is some action
 * type '#brutal config'
 * type '#brutal'
 
-## **#notes**
-* errors may crop up if your internet connection is too laggy
-* every care has been taken not to violate games rules on "help triggers". if you feel a part of my code violates/breaks these rules. please mudmail/tell me immediately.
-* with above point, triggers are set based from input from the prompt. if the prompt is not updated manually (by being unilde) then values may not correspond to real values.
+## **#known issues, future stuff and notes**
+* review icesus 'help triggers'; this plugin does NOT send any game breaking commands. please feel free to contact me if something is a miss.
+* graphical elements may look ugly over wine on linux. (nothing i can do about this)
+* i might put in scrollbars in the chat window in a future relase.
+* buffs window needs some work, need your help as i need the text that triggers start and finish of buff
+* errors may crop up if your internet connection is too laggy.
+* need to find a way to reclaim that screen real-estate when not in party.
+* do not blame plugin for death, loss of exp etc.
 * you can change some variables by editing brutal\config\user.lua such as font, font size.
+* plugin modfies the ingame terminal and prompt settings. (help term, help prompt)
+* i havent factored psp monitoring and vitae drain, i may code it in future depending if users want it.
 
 ## **#uninstalling**
 * remove/uninstall plugin from file, plugins
 * type '#brutal' to restore your original prompt
 * type 'unalias #brutal' to remove saved alias
-
-## **#todo and coming soon**
-
-* setup a chat mini floating window
-* setup a party mini floating window
 
 ## **#credits**
 thanks to Henrique Lazarini for icons and sprites:
@@ -62,8 +54,6 @@ thanks to the creators of the font inconsolata, i sourced from:
 https://fonts.google.com/specimen/Inconsolata
 
 most code has been written from scratch, using templates and examples from the muschlient forums.
-Many thanks to the all the devs there.
+loads of thanks to Nick and Fendish at mushclient dot com.
 
 http://mushclient.com/mushclient/mushclient.htm
-
-http://mushclient.com/functions
