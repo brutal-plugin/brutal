@@ -15,6 +15,7 @@ lower_case_tab_completion = 1       -- use lower case on tab complete
 ErrorNotificationToOutputWindow = 1 -- print errors to output window instead of annoying textbox
 max_output_lines = 50000            -- increase scrollback lines on output window
 wrap_column = 150                   -- maximum number of characters per line for width in output window
+echo_colour = 5                     -- echo my input in custom colour
 
 -- create a standard theme for miniwindows, saved under a in a table.
 -- Inconsolata font has been supplied with this plugin, and will install automatically as jail in mushclient

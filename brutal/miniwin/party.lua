@@ -271,7 +271,7 @@ function DrawBlankPartyGrid()
     local windowHeight = WindowInfo (pgrid_win, 4) -- get height
     for row=1,3 do
       for col=1,3 do
-        PartyGrid[row..col] = {
+          PartyGrid[col..row] = {
           left =  math.ceil((windowWidth/3) * (row - 1)) + TEXT_INSET,
           top = math.ceil((windowHeight/3) * (col - 1)) + TEXT_INSET,
           right = math.ceil((windowWidth/3) * (row)) - TEXT_INSET,

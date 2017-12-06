@@ -11,10 +11,12 @@ function set_brutal_theme()
   SetOption("max_output_lines", max_output_lines)
   SetOption("wrap_column", wrap_column)
   SetOption("lower_case_tab_completion", lower_case_tab_completion)
-  --F1Macro needs db hack, SetOption("F1macro", F1macro) does not work
-  db = sqlite3.open(GetInfo (82))  -- open preferences
-  db:exec 'UPDATE prefs SET value = 1 WHERE name = "F1macro"'
-  db:close()  -- close
+  SetOption("echo_colour",echo_colour)
+  SetOption("F1macro", F1macro)
+  --F1Macro db hack, SetOption("F1macro", F1macro) does not seem to work
+  --db = sqlite3.open(GetInfo (82))  -- open preferences
+  --db:exec 'UPDATE prefs SET value = 1 WHERE name = "F1macro"'
+  --db:close()  -- close
   SetBackgroundImage(bg_img,6)
   Redraw()
 end --function set_brutal_theme
