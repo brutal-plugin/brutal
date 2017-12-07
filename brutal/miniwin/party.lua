@@ -65,10 +65,8 @@ function CheckPartyStatus()
             ep = e
           })
         end --for
-        EnableTriggerGroup ("brutal_party", true)
         FillPartyGrid()
       else
-        EnableTriggerGroup ("brutal_party", false)
         if WindowInfo (party_win, 6) == false then --Is it hidden right now?
           AddMiniWindowTitleBar(party_win,"party placement -- create or join a party",true)
         end --if

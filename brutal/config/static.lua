@@ -41,3 +41,10 @@ comms_scrollbar_size = 15
 --create empty table containers for party
 PartyGrid = {}
 myParty = {}
+
+-- enable/disable miniwindows (for debugging)
+stats_win_enabled = true      -- enable healthbar and status mini floating window
+buffs_win_enabled = true      -- enable miniwindow for displaying active buffs
+comms_win_enabled = true      -- enable communications floating window
+party_win_enabled = true      -- enable party placement miniwindow
+use_classic_infobar = false   -- use classic modern infobar

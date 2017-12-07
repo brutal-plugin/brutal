@@ -49,13 +49,6 @@ gag_ingame_prompt = true              -- remove ingame prompt, and let the infob
 -- gag ingame hp/sp/ep health bars
 gag_color_bar = true                  -- remove ingame health guages, and let the infobar handle this
 
--- enable miniwindows
-stats_win_enabled = true      -- enable healthbar and status mini floating window
-buffs_win_enabled = true      -- enable miniwindow for displaying active buffs
-comms_win_enabled = true      -- enable communications floating window
-party_win_enabled = true      -- enable party placement miniwindow
-use_classic_infobar = false   -- use classic modern infobar
-
 --[[
 End of user configuration options
 ]]--
