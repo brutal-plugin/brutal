@@ -29,6 +29,9 @@ function AddPartyTriggers()
 end --function
 
 function CheckPartyStatus()
+  if not WindowInfo(party_win,21) then
+    return
+  end --if
   wait.make (function()
     send ("party status")
     local party_check = wait.regexp ("^\\\| Partyname: (?<party_name>.+)Kills made:(.+)\\\|$|^You are not in a party\\\!$",2)
@@ -77,6 +80,9 @@ function CheckPartyStatus()
 end --function CheckPartyStatus
 
 function createNewParty(name,line,wildcards)
+  if not WindowInfo(party_win,21) then
+    return
+  end --if
   myParty[whoami] = {}
   table.insert (myParty[whoami],{
     row = 1,
